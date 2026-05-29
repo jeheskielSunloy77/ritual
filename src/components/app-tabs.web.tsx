@@ -1,115 +1,145 @@
-import {
-  Tabs,
-  TabList,
-  TabTrigger,
-  TabSlot,
-  TabTriggerSlotProps,
-  TabListProps,
-} from 'expo-router/ui';
-import { SymbolView } from 'expo-symbols';
-import { Pressable, useColorScheme, View, StyleSheet } from 'react-native';
-
-import { ExternalLink } from './external-link';
+import React from 'react';
+import { View, Pressable, StyleSheet, useColorScheme, Platform, SafeAreaView } from 'react-native';
+import { Slot, useRouter, usePathname } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Neumorphic } from './Neumorphic';
 import { ThemedText } from './themed-text';
-import { ThemedView } from './themed-view';
-
-import { Colors, MaxContentWidth, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 
 export default function AppTabs() {
-  return (
-    <Tabs>
-      <TabSlot style={{ height: '100%' }} />
-      <TabList asChild>
-        <CustomTabList>
-          <TabTrigger name="home" href="/" asChild>
-            <TabButton>Home</TabButton>
-          </TabTrigger>
-          <TabTrigger name="explore" href="/explore" asChild>
-            <TabButton>Explore</TabButton>
-          </TabTrigger>
-        </CustomTabList>
-      </TabList>
-    </Tabs>
-  );
-}
-
-export function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps) {
-  return (
-    <Pressable {...props} style={({ pressed }) => pressed && styles.pressed}>
-      <ThemedView
-        type={isFocused ? 'backgroundSelected' : 'backgroundElement'}
-        style={styles.tabButtonView}>
-        <ThemedText type="small" themeColor={isFocused ? 'text' : 'textSecondary'}>
-          {children}
-        </ThemedText>
-      </ThemedView>
-    </Pressable>
-  );
-}
-
-export function CustomTabList(props: TabListProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const scheme = useColorScheme();
-  const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
+  const colors = Colors[scheme === 'dark' ? 'dark' : 'light'];
+
+  // Map route pathname to active tab
+  let activeTab = 'home';
+  if (pathname === '/analytics') {
+    activeTab = 'analytics';
+  } else if (pathname === '/habits') {
+    activeTab = 'habits';
+  }
+
+  const navigateTo = (tabName: 'home' | 'analytics' | 'habits') => {
+    if (tabName === 'home') {
+      router.navigate('/');
+    } else {
+      router.navigate(`/${tabName}`);
+    }
+  };
 
   return (
-    <View {...props} style={styles.tabListContainer}>
-      <ThemedView type="backgroundElement" style={styles.innerContainer}>
-        <ThemedText type="smallBold" style={styles.brandText}>
-          Expo Starter
-        </ThemedText>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Screen Content */}
+      <View style={styles.content}>
+        <Slot />
+      </View>
 
-        {props.children}
+      {/* Floating Centered Bottom NavBar */}
+      <Neumorphic
+        variant="extruded"
+        borderRadius={24}
+        style={[styles.navBar, { backgroundColor: colors.background }]}
+      >
+        {/* Home Tab */}
+        <Pressable onPress={() => navigateTo('home')} style={styles.tabItem}>
+          {activeTab === 'home' ? (
+            <Neumorphic variant="button-inset" borderRadius={16} style={styles.activeTabContainer}>
+              <MaterialIcons name="home" size={22} color="#944a19" />
+              <ThemedText style={styles.activeTabText}>Home</ThemedText>
+            </Neumorphic>
+          ) : (
+            <View style={styles.inactiveTabContainer}>
+              <MaterialIcons name="home" size={22} color="#54433a" />
+              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
+            </View>
+          )}
+        </Pressable>
 
-        <ExternalLink href="https://docs.expo.dev" asChild>
-          <Pressable style={styles.externalPressable}>
-            <ThemedText type="link">Docs</ThemedText>
-            <SymbolView
-              tintColor={colors.text}
-              name={{ ios: 'arrow.up.right.square', web: 'link' }}
-              size={12}
-            />
-          </Pressable>
-        </ExternalLink>
-      </ThemedView>
-    </View>
+        {/* Analytics Tab */}
+        <Pressable onPress={() => navigateTo('analytics')} style={styles.tabItem}>
+          {activeTab === 'analytics' ? (
+            <Neumorphic variant="button-inset" borderRadius={16} style={styles.activeTabContainer}>
+              <MaterialIcons name="insights" size={22} color="#944a19" />
+              <ThemedText style={styles.activeTabText}>Analytics</ThemedText>
+            </Neumorphic>
+          ) : (
+            <View style={styles.inactiveTabContainer}>
+              <MaterialIcons name="insights" size={22} color="#54433a" />
+              <ThemedText style={styles.inactiveTabText}>Analytics</ThemedText>
+            </View>
+          )}
+        </Pressable>
+
+        {/* Habits Tab */}
+        <Pressable onPress={() => navigateTo('habits')} style={styles.tabItem}>
+          {activeTab === 'habits' ? (
+            <Neumorphic variant="button-inset" borderRadius={16} style={styles.activeTabContainer}>
+              <MaterialIcons name="person" size={22} color="#944a19" />
+              <ThemedText style={styles.activeTabText}>Me</ThemedText>
+            </Neumorphic>
+          ) : (
+            <View style={styles.inactiveTabContainer}>
+              <MaterialIcons name="person" size={22} color="#54433a" />
+              <ThemedText style={styles.inactiveTabText}>Me</ThemedText>
+            </View>
+          )}
+        </Pressable>
+      </Neumorphic>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  tabListContainer: {
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+  },
+  navBar: {
     position: 'absolute',
-    width: '100%',
-    padding: Spacing.three,
+    bottom: 20, // Float above bottom
+    alignSelf: 'center',
+    width: '90%',
+    maxWidth: 440,
+    height: 72,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingHorizontal: 12,
+    zIndex: 50,
+  },
+  tabItem: {
+    flex: 1,
+    height: '100%',
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  activeTabContainer: {
+    width: '95%',
+    maxWidth: 110,
+    height: 46,
     alignItems: 'center',
-    flexDirection: 'row',
-  },
-  innerContainer: {
-    paddingVertical: Spacing.two,
-    paddingHorizontal: Spacing.five,
-    borderRadius: Spacing.five,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexGrow: 1,
-    gap: Spacing.two,
-    maxWidth: MaxContentWidth,
-  },
-  brandText: {
-    marginRight: 'auto',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  tabButtonView: {
-    paddingVertical: Spacing.one,
-    paddingHorizontal: Spacing.three,
-    borderRadius: Spacing.three,
-  },
-  externalPressable: {
-    flexDirection: 'row',
     justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 4,
+    paddingHorizontal: 8,
+  },
+  activeTabText: {
+    fontFamily: 'BeVietnamPro-SemiBold',
+    fontSize: 12,
+    color: '#944a19',
+  },
+  inactiveTabContainer: {
     alignItems: 'center',
-    gap: Spacing.one,
-    marginLeft: Spacing.three,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 4,
+  },
+  inactiveTabText: {
+    fontFamily: 'BeVietnamPro-Regular',
+    fontSize: 12,
+    color: '#54433a',
   },
 });
