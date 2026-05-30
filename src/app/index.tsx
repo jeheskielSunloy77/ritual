@@ -1,7 +1,14 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Pressable, Image, ScrollView, Platform, ActivityIndicator } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  ScrollView,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
 import Animated, {
   FadeInUp,
   useSharedValue,
@@ -9,15 +16,19 @@ import Animated, {
   withSpring,
   withSequence,
   LayoutAnimationConfig,
-} from 'react-native-reanimated';
-import { useHabits } from '@/context/HabitsContext';
-import { Neumorphic } from '@/components/Neumorphic';
-import { ThemedText } from '@/components/themed-text';
+} from "react-native-reanimated";
+import LottieView from "lottie-react-native";
+import { useHabits } from "@/context/HabitsContext";
+import { Neumorphic } from "@/components/Neumorphic";
+import { ThemedText } from "@/components/themed-text";
 
 export default function HomeScreen() {
-  const { habits, loading, toggleHabit } = useHabits();
+  const { habits, loading, toggleHabit, streakStats } = useHabits();
 
   const allCompleted = habits.length > 0 && habits.every((h) => h.completed);
+  const animationSource = allCompleted
+    ? require("@/assets/animations/flame.json")
+    : require("@/assets/animations/coffee.json");
 
   // Reanimated scale value for the central plinth
   const scale = useSharedValue(1);
@@ -26,7 +37,7 @@ export default function HomeScreen() {
     if (allCompleted) {
       scale.value = withSequence(
         withSpring(1.15, { damping: 8, stiffness: 100 }),
-        withSpring(1, { damping: 12, stiffness: 100 })
+        withSpring(1, { damping: 12, stiffness: 100 }),
       );
     }
   }, [allCompleted]);
@@ -46,18 +57,25 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      style={styles.container}
+    >
       {/* Background Gradient */}
       <LinearGradient
-        colors={['#ffe4d6', '#fef8f3']}
-        locations={[0, 0.7]}
+        colors={["#ffe4d6", "#fef8f3"]}
+        locations={[0, 0.5]}
         style={StyleSheet.absoluteFill}
       />
 
       {/* Greeting Header */}
       <Animated.View entering={FadeInUp.duration(600)} style={styles.header}>
         <ThemedText style={styles.greeting}>
-          {allCompleted ? "You're on fire today!" : "Morning, Jay. Your coffee is brewing..."}
+          {allCompleted
+            ? "You're on fire today!"
+            : streakStats.currentStreak > 0
+              ? "Morning, Jay. Your coffee is brewing..."
+              : "Time to brew a fresh cup..."}
         </ThemedText>
       </Animated.View>
 
@@ -66,27 +84,23 @@ export default function HomeScreen() {
         entering={FadeInUp.duration(600).delay(100)}
         style={[styles.plinthContainer, animatedPlinthStyle]}
       >
-        <Neumorphic variant="extruded" borderRadius={112} style={styles.plinthOuter}>
+        <View style={styles.plinthOuter}>
           <View style={styles.plinthInner}>
-            {allCompleted ? (
-              <Image
-                source={require('@/assets/images/flame.png')}
-                style={styles.illustration}
-                resizeMode="contain"
-              />
-            ) : (
-              <Image
-                source={require('@/assets/images/coffee.png')}
-                style={styles.illustration}
-                resizeMode="contain"
-              />
-            )}
+            <LottieView
+              source={animationSource}
+              autoPlay
+              loop
+              style={styles.illustration}
+            />
           </View>
-        </Neumorphic>
+        </View>
       </Animated.View>
 
       {/* Subtitle / Status */}
-      <Animated.View entering={FadeInUp.duration(600).delay(200)} style={styles.statusContainer}>
+      <Animated.View
+        entering={FadeInUp.duration(600).delay(200)}
+        style={styles.statusContainer}
+      >
         <ThemedText style={styles.statusText}>
           {allCompleted
             ? "All habits completed. You've earned 50 points."
@@ -96,10 +110,13 @@ export default function HomeScreen() {
 
       {/* Habit Cards List */}
       <LayoutAnimationConfig skipEntering>
-        <Animated.View entering={FadeInUp.duration(600).delay(300)} style={styles.listContainer}>
+        <Animated.View
+          entering={FadeInUp.duration(600).delay(300)}
+          style={styles.listContainer}
+        >
           {habits.map((habit) => {
             const iconName = habit.icon as any;
-            
+
             return (
               <Pressable
                 key={habit.id}
@@ -107,7 +124,7 @@ export default function HomeScreen() {
                 style={styles.cardPressable}
               >
                 <Neumorphic
-                  variant={habit.completed ? 'inset' : 'extruded'}
+                  variant={habit.completed ? "inset" : "extruded"}
                   borderRadius={20}
                   style={[styles.card, habit.completed && styles.cardCompleted]}
                 >
@@ -172,72 +189,73 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fef8f3',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fef8f3",
   },
   scrollContainer: {
     flexGrow: 1,
     paddingTop: 40,
     paddingBottom: 110,
     paddingHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   header: {
-    width: '100%',
-    textAlign: 'center',
+    width: "100%",
+    textAlign: "center",
     marginBottom: 32,
   },
   greeting: {
-    fontFamily: 'PlusJakartaSans-Bold',
-    fontSize: 20,
-    textAlign: 'center',
-    color: '#1d1b19',
+    fontFamily: "PlusJakartaSans-Bold",
+    fontSize: 40,
+    textAlign: "center",
+    color: "#1d1b19",
+    lineHeight: 48,
   },
   plinthContainer: {
     marginBottom: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   plinthOuter: {
-    width: 224,
-    height: 224,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 12,
+    width: 280,
+    height: 280,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
   },
   plinthInner: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 100,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    borderRadius: 140,
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
   },
   illustration: {
-    width: '90%',
-    height: '90%',
+    width: "100%",
+    height: "100%",
   },
   statusContainer: {
     marginBottom: 32,
   },
   statusText: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: "BeVietnamPro-Regular",
     fontSize: 16,
-    color: '#54433a',
-    textAlign: 'center',
+    color: "#54433a",
+    textAlign: "center",
   },
   listContainer: {
-    width: '100%',
+    width: "100%",
     maxWidth: 480,
     gap: 16,
   },
   cardPressable: {
-    width: '100%',
+    width: "100%",
   },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 18,
     gap: 16,
@@ -248,14 +266,14 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   checkboxUnchecked: {
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   checkboxInnerPlaceholder: {
     width: 16,
@@ -265,31 +283,31 @@ const styles = StyleSheet.create({
   checkboxChecked: {
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   infoContainer: {
     flex: 1,
   },
   habitTitle: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: "BeVietnamPro-SemiBold",
     fontSize: 18,
-    color: '#1d1b19',
+    color: "#1d1b19",
   },
   textCompleted: {
-    textDecorationLine: 'line-through',
+    textDecorationLine: "line-through",
     opacity: 0.6,
   },
   habitSubtitle: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: "BeVietnamPro-Regular",
     fontSize: 13,
-    color: '#54433a',
+    color: "#54433a",
     marginTop: 2,
   },
   iconWell: {
     width: 40,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
