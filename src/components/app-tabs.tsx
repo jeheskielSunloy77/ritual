@@ -16,13 +16,15 @@ export default function AppTabs() {
   let activeTab = 'home';
   if (pathname === '/analytics') {
     activeTab = 'analytics';
-  } else if (pathname === '/habits') {
+  } else if (pathname === '/me') {
     activeTab = 'habits';
   }
 
   const navigateTo = (tabName: 'home' | 'analytics' | 'habits') => {
     if (tabName === 'home') {
       router.navigate('/');
+    } else if (tabName === 'habits') {
+      router.navigate('/me');
     } else {
       router.navigate(`/${tabName}`);
     }

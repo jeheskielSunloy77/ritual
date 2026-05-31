@@ -23,7 +23,7 @@ import { useHabits } from '@/context/HabitsContext';
 import { Neumorphic } from '@/components/Neumorphic';
 import { ThemedText } from '@/components/themed-text';
 
-export default function HabitsScreen() {
+export default function MeScreen() {
   const { habits, loading, toggleHabit, addHabit, deleteHabit } = useHabits();
   const { width } = useWindowDimensions();
   const isWide = width >= 600;
