@@ -27,7 +27,7 @@ export default function HomeScreen() {
 
   const allCompleted = habits.length > 0 && habits.every((h) => h.completed);
   const animationSource = allCompleted
-    ? require("@/assets/animations/flame.json")
+    ? require("@/assets/animations/fire.lottie")
     : require("@/assets/animations/coffee.json");
 
   // Reanimated scale value for the central plinth
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   greeting: {
-    fontFamily: "PlusJakartaSans-Bold",
+    fontFamily: "Handlee-Regular",
     fontSize: 40,
     textAlign: "center",
     color: "#1d1b19",
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   statusText: {
-    fontFamily: "BeVietnamPro-Regular",
+    fontFamily: "Handlee-Regular",
     fontSize: 16,
     color: "#54433a",
     textAlign: "center",
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   habitTitle: {
-    fontFamily: "BeVietnamPro-SemiBold",
+    fontFamily: "Handlee-Regular",
     fontSize: 18,
     color: "#1d1b19",
   },
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   habitSubtitle: {
-    fontFamily: "BeVietnamPro-Regular",
+    fontFamily: "Handlee-Regular",
     fontSize: 13,
     color: "#54433a",
     marginTop: 2,

@@ -203,13 +203,13 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 26,
     color: '#1d1b19',
     marginBottom: 4,
   },
   subtitle: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
   },
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterTextActive: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#944a19',
   },
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterTextInactive: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
   },
@@ -264,12 +264,12 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   chartTitle: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 20,
     color: '#1d1b19',
   },
   chartSubtitle: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
     marginTop: 2,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   trendText: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#944a19',
   },
@@ -315,12 +315,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#944a19', // primary active
   },
   barLabel: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
   },
   barLabelToday: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     color: '#944a19',
   },
   statsContainer: {
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     maxWidth: 480,
   },
   sectionTitle: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 18,
     color: '#1d1b19',
     marginBottom: 16,
@@ -354,12 +354,12 @@ const styles = StyleSheet.create({
     borderColor: '#e6e2dd',
   },
   statValue: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 22,
     color: '#1d1b19',
   },
   statLabel: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
   },

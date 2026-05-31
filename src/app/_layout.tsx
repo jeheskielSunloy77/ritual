@@ -1,16 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
 import { useColorScheme, ActivityIndicator, View } from 'react-native';
-import {
-  useFonts,
-  PlusJakartaSans_400Regular,
-  PlusJakartaSans_600SemiBold,
-  PlusJakartaSans_700Bold,
-  PlusJakartaSans_800ExtraBold,
-} from '@expo-google-fonts/plus-jakarta-sans';
-import {
-  BeVietnamPro_400Regular,
-  BeVietnamPro_600SemiBold,
-} from '@expo-google-fonts/be-vietnam-pro';
+import { useFonts, Handlee_400Regular } from '@expo-google-fonts/handlee';
 import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -24,12 +14,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   
   const [fontsLoaded, fontError] = useFonts({
-    'PlusJakartaSans-Regular': PlusJakartaSans_400Regular,
-    'PlusJakartaSans-SemiBold': PlusJakartaSans_600SemiBold,
-    'PlusJakartaSans-Bold': PlusJakartaSans_700Bold,
-    'PlusJakartaSans-ExtraBold': PlusJakartaSans_800ExtraBold,
-    'BeVietnamPro-Regular': BeVietnamPro_400Regular,
-    'BeVietnamPro-SemiBold': BeVietnamPro_600SemiBold,
+    'Handlee-Regular': Handlee_400Regular,
   });
 
   useEffect(() => {

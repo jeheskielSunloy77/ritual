@@ -446,13 +446,13 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   pageTitle: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 26,
     color: '#1d1b19',
     marginBottom: 4,
   },
   pageSubtitle: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
   },
@@ -504,19 +504,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   habitTitle: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 18,
     color: '#1d1b19',
   },
   habitTitleCompleted: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 18,
     color: '#1d1b19',
     textDecorationLine: 'line-through',
     opacity: 0.6,
   },
   habitMeta: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
     marginTop: 2,
@@ -542,12 +542,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   progressLabel: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 13,
     color: '#54433a',
   },
   progressValue: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 13,
     color: '#54433a',
   },
@@ -577,7 +577,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   logBtnText: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#944a19',
   },
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#e6e2dd',
   },
   targetLabel: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
   },
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   completedText: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
     fontStyle: 'italic',
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalTitle: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 22,
     color: '#1d1b19',
   },
@@ -688,7 +688,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   inputLabel: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#54433a',
   },
@@ -698,7 +698,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   input: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 16,
     color: '#1d1b19',
     outlineStyle: 'none',
@@ -722,12 +722,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   optionTextActive: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 13,
     color: '#944a19',
   },
   optionText: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 13,
     color: '#54433a',
   },
@@ -785,7 +785,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submitText: {
-    fontFamily: 'PlusJakartaSans-Bold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 16,
     color: '#773402',
   },

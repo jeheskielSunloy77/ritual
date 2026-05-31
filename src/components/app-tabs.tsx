@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   activeTabText: {
-    fontFamily: 'BeVietnamPro-SemiBold',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#944a19',
   },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   inactiveTabText: {
-    fontFamily: 'BeVietnamPro-Regular',
+    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
   },
