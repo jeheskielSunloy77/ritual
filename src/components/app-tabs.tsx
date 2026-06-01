@@ -52,25 +52,6 @@ export default function AppTabs() {
         borderRadius={24}
         style={[styles.navBar, { backgroundColor: colors.background }]}
       >
-        {/* Home Tab */}
-        <Pressable onPress={() => navigateTo("home")} style={styles.tabItem}>
-          {activeTab === "home" ? (
-            <Neumorphic
-              variant="button-inset"
-              borderRadius={16}
-              style={styles.activeTabContainer}
-            >
-              <MaterialIcons name="home" size={22} color="#944a19" />
-              <ThemedText style={styles.activeTabText}>Home</ThemedText>
-            </Neumorphic>
-          ) : (
-            <View style={styles.inactiveTabContainer}>
-              <MaterialIcons name="home" size={22} color="#54433a" />
-              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
-            </View>
-          )}
-        </Pressable>
-
         {/* Analytics Tab */}
         <Pressable
           onPress={() => navigateTo("analytics")}
@@ -89,6 +70,25 @@ export default function AppTabs() {
             <View style={styles.inactiveTabContainer}>
               <MaterialIcons name="insights" size={22} color="#54433a" />
               <ThemedText style={styles.inactiveTabText}>Analytics</ThemedText>
+            </View>
+          )}
+        </Pressable>
+
+        {/* Home Tab */}
+        <Pressable onPress={() => navigateTo("home")} style={styles.tabItem}>
+          {activeTab === "home" ? (
+            <Neumorphic
+              variant="button-inset"
+              borderRadius={16}
+              style={styles.activeTabContainer}
+            >
+              <MaterialIcons name="home" size={22} color="#944a19" />
+              <ThemedText style={styles.activeTabText}>Home</ThemedText>
+            </Neumorphic>
+          ) : (
+            <View style={styles.inactiveTabContainer}>
+              <MaterialIcons name="home" size={22} color="#54433a" />
+              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
             </View>
           )}
         </Pressable>
