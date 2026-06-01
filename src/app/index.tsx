@@ -28,7 +28,9 @@ export default function HomeScreen() {
   const allCompleted = habits.length > 0 && habits.every((h) => h.completed);
   const animationSource = allCompleted
     ? require("@/assets/animations/fire.lottie")
-    : require("@/assets/animations/coffee.json");
+    : streakStats.currentStreak > 0
+      ? require("@/assets/animations/coffee.json")
+      : require("@/assets/animations/sleep.lottie");
 
   // Reanimated scale value for the central plinth
   const scale = useSharedValue(1);
