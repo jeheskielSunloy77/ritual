@@ -27,7 +27,7 @@ import { ThemedText } from '@/components/themed-text';
 
 export default function MeScreen() {
   const router = useRouter();
-  const { habits, loading, toggleHabit, addHabit, deleteHabit, avatarUri } = useHabits();
+  const { habits, loading, toggleHabit, addHabit, deleteHabit, avatarUri, username } = useHabits();
   const { width } = useWindowDimensions();
   const isWide = width >= 600;
   
@@ -106,7 +106,11 @@ export default function MeScreen() {
               {avatarUri ? (
                 <Image source={{ uri: avatarUri }} style={{ width: 32, height: 32, borderRadius: 16 }} />
               ) : (
-                <MaterialIcons name="person" size={24} color="#944a19" />
+                <Image
+                  source={{ uri: `https://api.dicebear.com/10.x/adventurer/png?seed=${username}` }}
+                  style={{ width: 32, height: 32, borderRadius: 16 }}
+                  contentFit="cover"
+                />
               )}
             </Neumorphic>
           </Pressable>
