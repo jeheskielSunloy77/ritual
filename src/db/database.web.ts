@@ -1,7 +1,7 @@
 import { Habit, HabitLog } from './types';
 
 const DB_NAME = 'RitualDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let dbInstance: IDBDatabase | null = null;
 
@@ -20,6 +20,9 @@ function getDB(): Promise<IDBDatabase> {
         store.createIndex('date', 'date', { unique: false });
         store.createIndex('habit_id', 'habit_id', { unique: false });
       }
+      if (!db.objectStoreNames.contains('settings')) {
+        db.createObjectStore('settings', { keyPath: 'key' });
+      }
     };
 
     request.onsuccess = () => {
@@ -35,6 +38,30 @@ function getDB(): Promise<IDBDatabase> {
 
 export async function initDatabase(): Promise<void> {
   await getDB();
+}
+
+export async function getSetting(key: string, defaultValue: string): Promise<string> {
+  const db = await getDB();
+  return new Promise((resolve) => {
+    const transaction = db.transaction('settings', 'readonly');
+    const store = transaction.objectStore('settings');
+    const request = store.get(key);
+    request.onsuccess = () => {
+      resolve(request.result ? (request.result as { key: string; value: string }).value : defaultValue);
+    };
+    request.onerror = () => resolve(defaultValue);
+  });
+}
+
+export async function setSetting(key: string, value: string): Promise<void> {
+  const db = await getDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction('settings', 'readwrite');
+    const store = transaction.objectStore('settings');
+    const request = store.put({ key, value });
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
 }
 
 export async function getHabits(): Promise<Habit[]> {

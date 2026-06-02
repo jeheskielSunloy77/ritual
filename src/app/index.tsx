@@ -23,7 +23,7 @@ import { Neumorphic } from "@/components/Neumorphic";
 import { ThemedText } from "@/components/themed-text";
 
 export default function HomeScreen() {
-  const { habits, loading, toggleHabit, streakStats } = useHabits();
+  const { habits, loading, toggleHabit, streakStats, username } = useHabits();
 
   const allCompleted = habits.length > 0 && habits.every((h) => h.completed);
   const animationSource = allCompleted
@@ -76,7 +76,7 @@ export default function HomeScreen() {
           {allCompleted
             ? "You're on fire today!"
             : streakStats.currentStreak > 0
-              ? "Morning, Jay. Your coffee is brewing..."
+              ? `Morning, ${username}. Your coffee is brewing...`
               : "Time to brew a fresh cup..."}
         </ThemedText>
       </Animated.View>

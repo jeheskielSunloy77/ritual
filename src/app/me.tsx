@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import {
   StyleSheet,
   View,
@@ -12,6 +13,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import Animated, {
   FadeInUp,
   SlideInDown,
@@ -24,7 +26,8 @@ import { Neumorphic } from '@/components/Neumorphic';
 import { ThemedText } from '@/components/themed-text';
 
 export default function MeScreen() {
-  const { habits, loading, toggleHabit, addHabit, deleteHabit } = useHabits();
+  const router = useRouter();
+  const { habits, loading, toggleHabit, addHabit, deleteHabit, avatarUri } = useHabits();
   const { width } = useWindowDimensions();
   const isWide = width >= 600;
   
@@ -97,10 +100,14 @@ export default function MeScreen() {
             <ThemedText style={styles.pageTitle}>My Habits</ThemedText>
             <ThemedText style={styles.pageSubtitle}>Your active routines to nurture.</ThemedText>
           </View>
-          {/* Add Habit Header Action */}
-          <Pressable onPress={() => setModalVisible(true)} style={styles.addHeaderBtnPressable}>
+          {/* Profile Page Header Action */}
+          <Pressable onPress={() => router.push('/profile')} style={styles.addHeaderBtnPressable}>
             <Neumorphic variant="button-extruded" borderRadius={24} style={styles.addHeaderBtn}>
-              <MaterialIcons name="add" size={24} color="#944a19" />
+              {avatarUri ? (
+                <Image source={{ uri: avatarUri }} style={{ width: 32, height: 32, borderRadius: 16 }} />
+              ) : (
+                <MaterialIcons name="person" size={24} color="#944a19" />
+              )}
             </Neumorphic>
           </Pressable>
         </Animated.View>
@@ -220,6 +227,15 @@ export default function MeScreen() {
           })}
         </Animated.View>
       </ScrollView>
+
+      {/* Floating Action Button */}
+      <View style={styles.fabContainer} pointerEvents="box-none">
+        <Pressable onPress={() => setModalVisible(true)} style={styles.fabPressable}>
+          <Neumorphic variant="button-extruded" borderRadius={28} style={styles.fabBtn} backgroundColor="#ff9f67">
+            <MaterialIcons name="add" size={28} color="#773402" />
+          </Neumorphic>
+        </Pressable>
+      </View>
 
       {/* Create Habit Modal Bottom Sheet / Dialog */}
       <Modal
@@ -433,7 +449,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingTop: 32,
-    paddingBottom: 110,
+    paddingBottom: 160,
     paddingHorizontal: 20,
     alignItems: 'center',
   },
@@ -788,5 +804,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Handlee-Regular',
     fontSize: 16,
     color: '#773402',
+  },
+  fabContainer: {
+    position: 'absolute',
+    bottom: 110, // Float above bottom tab bar
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 480,
+    height: 56,
+    zIndex: 40,
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
+  },
+  fabPressable: {
+    width: 56,
+    height: 56,
+  },
+  fabBtn: {
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
   },
 });

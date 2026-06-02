@@ -12,6 +12,10 @@ export default function AppTabs() {
   const scheme = useColorScheme();
   const colors = Colors[scheme === 'dark' ? 'dark' : 'light'];
 
+  if (pathname === '/profile') {
+    return <Slot />;
+  }
+
   // Map route pathname to active tab
   let activeTab = 'home';
   if (pathname === '/analytics') {

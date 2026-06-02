@@ -23,6 +23,9 @@ interface HabitsContextType {
     completionRate: number;
   };
   refreshData: () => Promise<void>;
+  username: string;
+  avatarUri: string;
+  updateProfile: (username: string, avatarUri: string) => Promise<void>;
 }
 
 const HabitsContext = createContext<HabitsContextType | undefined>(undefined);
@@ -57,11 +60,18 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
   const [currentDate, setCurrentDate] = useState<string>(getLocalDateString());
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [username, setUsername] = useState<string>('Jay');
+  const [avatarUri, setAvatarUri] = useState<string>('');
+
   // Initialize DB and load data
   useEffect(() => {
     async function setup() {
       try {
         await db.initDatabase();
+        const savedUsername = await db.getSetting('username', 'Jay');
+        const savedAvatarUri = await db.getSetting('avatar_uri', '');
+        setUsername(savedUsername);
+        setAvatarUri(savedAvatarUri);
         await loadData();
       } catch (err) {
         console.error('Error initializing database:', err);
@@ -277,6 +287,13 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     return getLocalDateString(d);
   }
 
+  async function updateProfile(newUsername: string, newAvatarUri: string) {
+    await db.setSetting('username', newUsername);
+    await db.setSetting('avatar_uri', newAvatarUri);
+    setUsername(newUsername);
+    setAvatarUri(newAvatarUri);
+  }
+
   return (
     <HabitsContext.Provider
       value={{
@@ -289,7 +306,10 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
         deleteHabit,
         weeklyProgress,
         streakStats,
-        refreshData: loadData
+        refreshData: loadData,
+        username,
+        avatarUri,
+        updateProfile
       }}
     >
       {children}

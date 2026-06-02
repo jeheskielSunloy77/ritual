@@ -39,8 +39,28 @@ export async function initDatabase(): Promise<void> {
       FOREIGN KEY(habit_id) REFERENCES habits(id) ON DELETE CASCADE,
       UNIQUE(habit_id, date)
     );
+    CREATE TABLE IF NOT EXISTS settings (
+      key TEXT PRIMARY KEY NOT NULL,
+      value TEXT NOT NULL
+    );
   `);
 
+}
+
+export async function getSetting(key: string, defaultValue: string): Promise<string> {
+  const db = await getDatabase();
+  const rows = await db.getAllAsync<{ value: string }>('SELECT value FROM settings WHERE key = ?', [key]);
+  return rows.length > 0 ? rows[0].value : defaultValue;
+}
+
+export async function setSetting(key: string, value: string): Promise<void> {
+  const db = await getDatabase();
+  await db.runAsync(
+    `INSERT INTO settings (key, value)
+     VALUES (?, ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
+    [key, value]
+  );
 }
 
 export async function getHabits(): Promise<Habit[]> {
