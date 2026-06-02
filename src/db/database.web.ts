@@ -34,51 +34,7 @@ function getDB(): Promise<IDBDatabase> {
 }
 
 export async function initDatabase(): Promise<void> {
-  const db = await getDB();
-  
-  // Check if we need to seed defaults
-  const habits = await getHabits();
-  if (habits.length === 0) {
-    const defaults: Habit[] = [
-      {
-        id: 'h1',
-        title: 'Hydrate',
-        subtitle: 'Drink a glass of water',
-        frequency: 'daily',
-        icon: 'water_drop',
-        color: 'primary',
-        target_type: 'counter',
-        target_value: 8,
-        created_at: new Date().toISOString(),
-      },
-      {
-        id: 'h2',
-        title: 'Meditation',
-        subtitle: '10 minutes of focus',
-        frequency: 'daily',
-        icon: 'self_improvement',
-        color: 'secondary',
-        target_type: 'boolean',
-        target_value: 1,
-        created_at: new Date().toISOString(),
-      },
-      {
-        id: 'h3',
-        title: 'Read 10 pages',
-        subtitle: 'Current book',
-        frequency: 'daily',
-        icon: 'menu_book',
-        color: 'tertiary',
-        target_type: 'boolean',
-        target_value: 1,
-        created_at: new Date().toISOString(),
-      }
-    ];
-
-    for (const habit of defaults) {
-      await saveHabit(habit);
-    }
-  }
+  await getDB();
 }
 
 export async function getHabits(): Promise<Habit[]> {
