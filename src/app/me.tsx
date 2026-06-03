@@ -13,7 +13,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
 import Animated, {
   FadeInUp,
   SlideInDown,
@@ -100,18 +99,9 @@ export default function MeScreen() {
             <ThemedText style={styles.pageTitle}>My Habits</ThemedText>
             <ThemedText style={styles.pageSubtitle}>Your active routines to nurture.</ThemedText>
           </View>
-          {/* Profile Page Header Action */}
           <Pressable onPress={() => router.push('/profile')} style={styles.addHeaderBtnPressable}>
             <Neumorphic variant="button-extruded" borderRadius={24} style={styles.addHeaderBtn}>
-              {avatarUri ? (
-                <Image source={{ uri: avatarUri }} style={{ width: 32, height: 32, borderRadius: 16 }} />
-              ) : (
-                <Image
-                  source={{ uri: `https://api.dicebear.com/10.x/adventurer/png?seed=${username}` }}
-                  style={{ width: 32, height: 32, borderRadius: 16 }}
-                  contentFit="cover"
-                />
-              )}
+              <MaterialIcons name="person" size={24} color="#944a19" />
             </Neumorphic>
           </Pressable>
         </Animated.View>
