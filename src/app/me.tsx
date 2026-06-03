@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRouter } from 'expo-router';
+import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import {
   StyleSheet,
   View,
@@ -11,36 +11,48 @@ import {
   Dimensions,
   Platform,
   useWindowDimensions,
-} from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import Animated, {
   FadeInUp,
   SlideInDown,
   SlideOutDown,
   FadeIn,
   FadeOut,
-} from 'react-native-reanimated';
-import { useHabits } from '@/context/HabitsContext';
-import { Neumorphic } from '@/components/Neumorphic';
-import { ThemedText } from '@/components/themed-text';
+} from "react-native-reanimated";
+import { useHabits } from "@/context/HabitsContext";
+import { Neumorphic } from "@/components/Neumorphic";
+import { ThemedText } from "@/components/themed-text";
 
 export default function MeScreen() {
   const router = useRouter();
-  const { habits, loading, toggleHabit, addHabit, deleteHabit, avatarUri, username } = useHabits();
+  const {
+    habits,
+    loading,
+    toggleHabit,
+    addHabit,
+    deleteHabit,
+    avatarUri,
+    username,
+  } = useHabits();
   const { width } = useWindowDimensions();
   const isWide = width >= 600;
-  
+
   // Modal visibility states
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   // Form states
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [frequency, setFrequency] = useState('daily'); // 'daily' | 'weekdays' | 'weekends'
-  const [icon, setIcon] = useState('water_drop');
-  const [color, setColor] = useState<'primary' | 'secondary' | 'tertiary'>('primary');
-  const [targetType, setTargetType] = useState<'boolean' | 'counter'>('boolean');
-  const [targetValue, setTargetValue] = useState('1');
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [frequency, setFrequency] = useState("daily"); // 'daily' | 'weekdays' | 'weekends'
+  const [icon, setIcon] = useState("water_drop");
+  const [color, setColor] = useState<"primary" | "secondary" | "tertiary">(
+    "primary",
+  );
+  const [targetType, setTargetType] = useState<"boolean" | "counter">(
+    "boolean",
+  );
+  const [targetValue, setTargetValue] = useState("1");
 
   if (loading) {
     return (
@@ -52,26 +64,26 @@ export default function MeScreen() {
 
   const handleCreateHabit = async () => {
     if (!title.trim()) return;
-    
+
     const parsedTargetValue = parseInt(targetValue, 10) || 1;
     await addHabit(
       title,
-      subtitle || 'Ritual habit',
+      subtitle || "Ritual habit",
       frequency,
       icon,
       color,
       targetType,
-      parsedTargetValue
+      parsedTargetValue,
     );
 
     // Reset Form
-    setTitle('');
-    setSubtitle('');
-    setFrequency('daily');
-    setIcon('water_drop');
-    setColor('primary');
-    setTargetType('boolean');
-    setTargetValue('1');
+    setTitle("");
+    setSubtitle("");
+    setFrequency("daily");
+    setIcon("water_drop");
+    setColor("primary");
+    setTargetType("boolean");
+    setTargetValue("1");
     setModalVisible(false);
   };
 
@@ -80,14 +92,14 @@ export default function MeScreen() {
   };
 
   const availableIcons = [
-    'water_drop',
-    'self_improvement',
-    'menu_book',
-    'directions_walk',
-    'fitness_center',
-    'hotel',
-    'favorite',
-    'emoji_objects',
+    "water_drop",
+    "self_improvement",
+    "menu_book",
+    "directions_walk",
+    "fitness_center",
+    "hotel",
+    "favorite",
+    "emoji_objects",
   ];
 
   return (
@@ -97,52 +109,84 @@ export default function MeScreen() {
         <Animated.View entering={FadeInUp.duration(600)} style={styles.header}>
           <View>
             <ThemedText style={styles.pageTitle}>My Habits</ThemedText>
-            <ThemedText style={styles.pageSubtitle}>Your active routines to nurture.</ThemedText>
+            <ThemedText style={styles.pageSubtitle}>
+              Your active routines to nurture.
+            </ThemedText>
           </View>
-          <Pressable onPress={() => router.push('/profile')} style={styles.addHeaderBtnPressable}>
-            <Neumorphic variant="button-extruded" borderRadius={24} style={styles.addHeaderBtn}>
+          <Pressable
+            onPress={() => router.push("/profile")}
+            style={styles.addHeaderBtnPressable}
+          >
+            <Neumorphic
+              variant="button-extruded"
+              borderRadius={24}
+              style={styles.addHeaderBtn}
+            >
               <MaterialIcons name="person" size={24} color="#944a19" />
             </Neumorphic>
           </Pressable>
         </Animated.View>
 
         {/* Habits Grid */}
-        <Animated.View entering={FadeInUp.duration(600).delay(150)} style={styles.grid}>
+        <Animated.View
+          entering={FadeInUp.duration(600).delay(150)}
+          style={styles.grid}
+        >
           {habits.map((habit) => {
             const iconName = habit.icon as any;
-            const progressPercent = habit.target_type === 'counter'
-              ? Math.round((habit.current_progress / habit.target_value) * 100)
-              : 0;
+            const progressPercent =
+              habit.target_type === "counter"
+                ? Math.round(
+                    (habit.current_progress / habit.target_value) * 100,
+                  )
+                : 0;
 
             const iconColors = {
-              primary: '#944a19',
-              secondary: '#765b06',
-              tertiary: '#615e57',
+              primary: "#944a19",
+              secondary: "#765b06",
+              tertiary: "#615e57",
             };
 
             return (
               <View key={habit.id} style={styles.cardContainer}>
                 {habit.completed ? (
                   /* Completed Inset Card */
-                  <Neumorphic variant="inset-deep" borderRadius={24} style={styles.cardCompleted}>
+                  <Neumorphic
+                    variant="inset-deep"
+                    borderRadius={24}
+                    style={styles.cardCompleted}
+                  >
                     <View style={styles.cardHeader}>
                       <View style={styles.cardHeaderLeft}>
-                        <Neumorphic variant="inset" borderRadius={20} style={styles.iconWellCompleted}>
-                          <MaterialIcons name={iconName} size={20} color="#ff9f67" />
+                        <Neumorphic
+                          variant="inset"
+                          borderRadius={20}
+                          style={styles.iconWellCompleted}
+                        >
+                          <MaterialIcons
+                            name={iconName}
+                            size={20}
+                            color="#ff9f67"
+                          />
                         </Neumorphic>
                         <View>
                           <ThemedText style={styles.habitTitleCompleted}>
                             {habit.title}
                           </ThemedText>
                           <ThemedText style={styles.habitMeta}>
-                            {habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1)}
+                            {habit.frequency.charAt(0).toUpperCase() +
+                              habit.frequency.slice(1)}
                           </ThemedText>
                         </View>
                       </View>
-                      
+
                       {/* Completed Check icon */}
                       <View style={styles.completedIndicator}>
-                        <MaterialIcons name="check-circle" size={24} color="#944a19" />
+                        <MaterialIcons
+                          name="check-circle"
+                          size={24}
+                          color="#944a19"
+                        />
                       </View>
                     </View>
 
@@ -150,42 +194,77 @@ export default function MeScreen() {
                       <ThemedText style={styles.completedText}>
                         Great job! Completed today.
                       </ThemedText>
-                      <Pressable style={styles.deleteBtn} onPress={() => deleteHabit(habit.id)}>
-                        <MaterialIcons name="delete-outline" size={18} color="#ba1a1a" />
+                      <Pressable
+                        style={styles.deleteBtn}
+                        onPress={() => deleteHabit(habit.id)}
+                      >
+                        <MaterialIcons
+                          name="delete-outline"
+                          size={18}
+                          color="#ba1a1a"
+                        />
                       </Pressable>
                     </View>
                   </Neumorphic>
                 ) : (
                   /* Pending Extruded Card */
-                  <Neumorphic variant="extruded" borderRadius={24} style={styles.card}>
+                  <Neumorphic
+                    variant="extruded"
+                    borderRadius={24}
+                    style={styles.card}
+                  >
                     <View style={styles.cardHeader}>
                       <View style={styles.cardHeaderLeft}>
-                        <Neumorphic variant="inset" borderRadius={20} style={styles.iconWell}>
-                          <MaterialIcons name={iconName} size={20} color={iconColors[habit.color] || '#944a19'} />
+                        <Neumorphic
+                          variant="inset"
+                          borderRadius={20}
+                          style={styles.iconWell}
+                        >
+                          <MaterialIcons
+                            name={iconName}
+                            size={20}
+                            color={iconColors[habit.color] || "#944a19"}
+                          />
                         </Neumorphic>
                         <View>
-                          <ThemedText style={styles.habitTitle}>{habit.title}</ThemedText>
+                          <ThemedText style={styles.habitTitle}>
+                            {habit.title}
+                          </ThemedText>
                           <ThemedText style={styles.habitMeta}>
-                            {habit.frequency.charAt(0).toUpperCase() + habit.frequency.slice(1)}
+                            {habit.frequency.charAt(0).toUpperCase() +
+                              habit.frequency.slice(1)}
                           </ThemedText>
                         </View>
                       </View>
-                      
-                      <Pressable style={styles.deleteBtn} onPress={() => deleteHabit(habit.id)}>
-                        <MaterialIcons name="delete-outline" size={18} color="#877369" />
+
+                      <Pressable
+                        style={styles.deleteBtn}
+                        onPress={() => deleteHabit(habit.id)}
+                      >
+                        <MaterialIcons
+                          name="delete-outline"
+                          size={18}
+                          color="#877369"
+                        />
                       </Pressable>
                     </View>
 
                     {/* Progress details if counter */}
-                    {habit.target_type === 'counter' ? (
+                    {habit.target_type === "counter" ? (
                       <View style={styles.progressContainer}>
                         <View style={styles.progressLabelRow}>
-                          <ThemedText style={styles.progressLabel}>Progress</ThemedText>
+                          <ThemedText style={styles.progressLabel}>
+                            Progress
+                          </ThemedText>
                           <ThemedText style={styles.progressValue}>
                             {habit.current_progress}/{habit.target_value}
                           </ThemedText>
                         </View>
-                        <Neumorphic variant="inset" borderRadius={8} style={styles.progressBar}>
+                        <Neumorphic
+                          variant="inset"
+                          borderRadius={8}
+                          style={styles.progressBar}
+                        >
                           <View
                             style={[
                               styles.progressFill,
@@ -193,12 +272,25 @@ export default function MeScreen() {
                             ]}
                           />
                         </Neumorphic>
-                        
+
                         <View style={styles.logActionRow}>
-                          <Pressable onPress={() => handleIncrement(habit.id)} style={styles.logPressable}>
-                            <Neumorphic variant="button-extruded" borderRadius={16} style={styles.logBtn}>
-                              <MaterialIcons name="add" size={16} color="#944a19" />
-                              <ThemedText style={styles.logBtnText}>Log Progress</ThemedText>
+                          <Pressable
+                            onPress={() => handleIncrement(habit.id)}
+                            style={styles.logPressable}
+                          >
+                            <Neumorphic
+                              variant="button-extruded"
+                              borderRadius={16}
+                              style={styles.logBtn}
+                            >
+                              <MaterialIcons
+                                name="add"
+                                size={16}
+                                color="#944a19"
+                              />
+                              <ThemedText style={styles.logBtnText}>
+                                Log Progress
+                              </ThemedText>
                             </Neumorphic>
                           </Pressable>
                         </View>
@@ -206,10 +298,23 @@ export default function MeScreen() {
                     ) : (
                       /* Toggle Check if boolean */
                       <View style={styles.booleanActionRow}>
-                        <ThemedText style={styles.targetLabel}>{habit.subtitle}</ThemedText>
-                        <Pressable onPress={() => toggleHabit(habit.id)} style={styles.checkPressable}>
-                          <Neumorphic variant="button-extruded" borderRadius={16} style={styles.checkBtn}>
-                            <MaterialIcons name="check" size={18} color="#944a19" />
+                        <ThemedText style={styles.targetLabel}>
+                          {habit.subtitle}
+                        </ThemedText>
+                        <Pressable
+                          onPress={() => toggleHabit(habit.id)}
+                          style={styles.checkPressable}
+                        >
+                          <Neumorphic
+                            variant="button-extruded"
+                            borderRadius={16}
+                            style={styles.checkBtn}
+                          >
+                            <MaterialIcons
+                              name="check"
+                              size={18}
+                              color="#944a19"
+                            />
                           </Neumorphic>
                         </Pressable>
                       </View>
@@ -223,9 +328,20 @@ export default function MeScreen() {
       </ScrollView>
 
       {/* Floating Action Button */}
-      <View style={styles.fabContainer} pointerEvents="box-none">
-        <Pressable onPress={() => setModalVisible(true)} style={styles.fabPressable}>
-          <Neumorphic variant="button-extruded" borderRadius={28} style={styles.fabBtn} backgroundColor="#ff9f67">
+      <View
+        style={[styles.fabContainer, !isWide && styles.fabContainerNarrow]}
+        pointerEvents="box-none"
+      >
+        <Pressable
+          onPress={() => setModalVisible(true)}
+          style={styles.fabPressable}
+        >
+          <Neumorphic
+            variant="button-extruded"
+            borderRadius={28}
+            style={styles.fabBtn}
+            backgroundColor="#ff9f67"
+          >
             <MaterialIcons name="add" size={28} color="#773402" />
           </Neumorphic>
         </Pressable>
@@ -238,21 +354,39 @@ export default function MeScreen() {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={[styles.modalOverlay, isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom]}>
+        <View
+          style={[
+            styles.modalOverlay,
+            isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom,
+          ]}
+        >
           {/* Backdrop Closer */}
-          <Pressable style={StyleSheet.absoluteFill} onPress={() => setModalVisible(false)} />
-          
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => setModalVisible(false)}
+          />
+
           <Animated.View
             entering={isWide ? FadeIn.duration(300) : SlideInDown.duration(400)}
-            exiting={isWide ? FadeOut.duration(200) : SlideOutDown.duration(300)}
-            style={[styles.modalSheet, isWide ? styles.modalSheetCentered : styles.modalSheetBottom]}
+            exiting={
+              isWide ? FadeOut.duration(200) : SlideOutDown.duration(300)
+            }
+            style={[
+              styles.modalSheet,
+              isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
+            ]}
           >
             {/* Grab Handle */}
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
-              <ThemedText style={styles.modalTitle}>Create New Habit</ThemedText>
-              <Pressable style={styles.closeBtn} onPress={() => setModalVisible(false)}>
+              <ThemedText style={styles.modalTitle}>
+                Create New Habit
+              </ThemedText>
+              <Pressable
+                style={styles.closeBtn}
+                onPress={() => setModalVisible(false)}
+              >
                 <MaterialIcons name="close" size={24} color="#54433a" />
               </Pressable>
             </View>
@@ -261,7 +395,11 @@ export default function MeScreen() {
               {/* Title Input */}
               <View style={styles.formGroup}>
                 <ThemedText style={styles.inputLabel}>Habit Title</ThemedText>
-                <Neumorphic variant="inset" borderRadius={12} style={styles.inputWell}>
+                <Neumorphic
+                  variant="inset"
+                  borderRadius={12}
+                  style={styles.inputWell}
+                >
                   <TextInput
                     value={title}
                     onChangeText={setTitle}
@@ -274,8 +412,14 @@ export default function MeScreen() {
 
               {/* Subtitle Input */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Description / Goal</ThemedText>
-                <Neumorphic variant="inset" borderRadius={12} style={styles.inputWell}>
+                <ThemedText style={styles.inputLabel}>
+                  Description / Goal
+                </ThemedText>
+                <Neumorphic
+                  variant="inset"
+                  borderRadius={12}
+                  style={styles.inputWell}
+                >
                   <TextInput
                     value={subtitle}
                     onChangeText={setSubtitle}
@@ -290,18 +434,30 @@ export default function MeScreen() {
               <View style={styles.formGroup}>
                 <ThemedText style={styles.inputLabel}>Frequency</ThemedText>
                 <View style={styles.optionsRow}>
-                  {['daily', 'weekdays', 'weekends'].map((f) => {
+                  {["daily", "weekdays", "weekends"].map((f) => {
                     const isSelected = frequency === f;
                     return (
-                      <Pressable key={f} onPress={() => setFrequency(f)} style={styles.optionPressable}>
+                      <Pressable
+                        key={f}
+                        onPress={() => setFrequency(f)}
+                        style={styles.optionPressable}
+                      >
                         {isSelected ? (
-                          <Neumorphic variant="button-inset" borderRadius={16} style={styles.optionBtnActive}>
+                          <Neumorphic
+                            variant="button-inset"
+                            borderRadius={16}
+                            style={styles.optionBtnActive}
+                          >
                             <ThemedText style={styles.optionTextActive}>
                               {f.charAt(0).toUpperCase() + f.slice(1)}
                             </ThemedText>
                           </Neumorphic>
                         ) : (
-                          <Neumorphic variant="button-extruded" borderRadius={16} style={styles.optionBtn}>
+                          <Neumorphic
+                            variant="button-extruded"
+                            borderRadius={16}
+                            style={styles.optionBtn}
+                          >
                             <ThemedText style={styles.optionText}>
                               {f.charAt(0).toUpperCase() + f.slice(1)}
                             </ThemedText>
@@ -316,18 +472,42 @@ export default function MeScreen() {
               {/* Icon selection */}
               <View style={styles.formGroup}>
                 <ThemedText style={styles.inputLabel}>Icon Category</ThemedText>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.iconsRow}>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.iconsRow}
+                >
                   {availableIcons.map((ic) => {
                     const isSelected = icon === ic;
                     return (
-                      <Pressable key={ic} onPress={() => setIcon(ic)} style={styles.iconPressable}>
+                      <Pressable
+                        key={ic}
+                        onPress={() => setIcon(ic)}
+                        style={styles.iconPressable}
+                      >
                         {isSelected ? (
-                          <Neumorphic variant="button-inset" borderRadius={16} style={styles.iconBtnActive}>
-                            <MaterialIcons name={ic as any} size={20} color="#944a19" />
+                          <Neumorphic
+                            variant="button-inset"
+                            borderRadius={16}
+                            style={styles.iconBtnActive}
+                          >
+                            <MaterialIcons
+                              name={ic as any}
+                              size={20}
+                              color="#944a19"
+                            />
                           </Neumorphic>
                         ) : (
-                          <Neumorphic variant="button-extruded" borderRadius={16} style={styles.iconBtn}>
-                            <MaterialIcons name={ic as any} size={20} color="#54433a" />
+                          <Neumorphic
+                            variant="button-extruded"
+                            borderRadius={16}
+                            style={styles.iconBtn}
+                          >
+                            <MaterialIcons
+                              name={ic as any}
+                              size={20}
+                              color="#54433a"
+                            />
                           </Neumorphic>
                         )}
                       </Pressable>
@@ -340,25 +520,47 @@ export default function MeScreen() {
               <View style={styles.formGroup}>
                 <ThemedText style={styles.inputLabel}>Color Accent</ThemedText>
                 <View style={styles.optionsRow}>
-                  {(['primary', 'secondary', 'tertiary'] as const).map((c) => {
+                  {(["primary", "secondary", "tertiary"] as const).map((c) => {
                     const isSelected = color === c;
                     const cColors = {
-                      primary: '#ff9f67',
-                      secondary: '#ffd97d',
-                      tertiary: '#bbb6ae',
+                      primary: "#ff9f67",
+                      secondary: "#ffd97d",
+                      tertiary: "#bbb6ae",
                     };
                     return (
-                      <Pressable key={c} onPress={() => setColor(c)} style={styles.optionPressable}>
+                      <Pressable
+                        key={c}
+                        onPress={() => setColor(c)}
+                        style={styles.optionPressable}
+                      >
                         {isSelected ? (
-                          <Neumorphic variant="button-inset" borderRadius={16} style={styles.colorPillActive}>
-                            <View style={[styles.colorDot, { backgroundColor: cColors[c] }]} />
+                          <Neumorphic
+                            variant="button-inset"
+                            borderRadius={16}
+                            style={styles.colorPillActive}
+                          >
+                            <View
+                              style={[
+                                styles.colorDot,
+                                { backgroundColor: cColors[c] },
+                              ]}
+                            />
                             <ThemedText style={styles.optionTextActive}>
                               {c.charAt(0).toUpperCase() + c.slice(1)}
                             </ThemedText>
                           </Neumorphic>
                         ) : (
-                          <Neumorphic variant="button-extruded" borderRadius={16} style={styles.colorPill}>
-                            <View style={[styles.colorDot, { backgroundColor: cColors[c] }]} />
+                          <Neumorphic
+                            variant="button-extruded"
+                            borderRadius={16}
+                            style={styles.colorPill}
+                          >
+                            <View
+                              style={[
+                                styles.colorDot,
+                                { backgroundColor: cColors[c] },
+                              ]}
+                            />
                             <ThemedText style={styles.optionText}>
                               {c.charAt(0).toUpperCase() + c.slice(1)}
                             </ThemedText>
@@ -372,22 +574,40 @@ export default function MeScreen() {
 
               {/* Target Type selection */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Goal Target Mode</ThemedText>
+                <ThemedText style={styles.inputLabel}>
+                  Goal Target Mode
+                </ThemedText>
                 <View style={styles.optionsRow}>
-                  {['boolean', 'counter'].map((t) => {
+                  {["boolean", "counter"].map((t) => {
                     const isSelected = targetType === t;
                     return (
-                      <Pressable key={t} onPress={() => setTargetType(t as any)} style={styles.optionPressable}>
+                      <Pressable
+                        key={t}
+                        onPress={() => setTargetType(t as any)}
+                        style={styles.optionPressable}
+                      >
                         {isSelected ? (
-                          <Neumorphic variant="button-inset" borderRadius={16} style={styles.optionBtnActive}>
+                          <Neumorphic
+                            variant="button-inset"
+                            borderRadius={16}
+                            style={styles.optionBtnActive}
+                          >
                             <ThemedText style={styles.optionTextActive}>
-                              {t === 'boolean' ? 'Simple Check' : 'Counter Number'}
+                              {t === "boolean"
+                                ? "Simple Check"
+                                : "Counter Number"}
                             </ThemedText>
                           </Neumorphic>
                         ) : (
-                          <Neumorphic variant="button-extruded" borderRadius={16} style={styles.optionBtn}>
+                          <Neumorphic
+                            variant="button-extruded"
+                            borderRadius={16}
+                            style={styles.optionBtn}
+                          >
                             <ThemedText style={styles.optionText}>
-                              {t === 'boolean' ? 'Simple Check' : 'Counter Number'}
+                              {t === "boolean"
+                                ? "Simple Check"
+                                : "Counter Number"}
                             </ThemedText>
                           </Neumorphic>
                         )}
@@ -398,10 +618,16 @@ export default function MeScreen() {
               </View>
 
               {/* Target Value input if counter */}
-              {targetType === 'counter' && (
+              {targetType === "counter" && (
                 <View style={styles.formGroup}>
-                  <ThemedText style={styles.inputLabel}>Target Goal (e.g. 8 times)</ThemedText>
-                  <Neumorphic variant="inset" borderRadius={12} style={styles.inputWell}>
+                  <ThemedText style={styles.inputLabel}>
+                    Target Goal (e.g. 8 times)
+                  </ThemedText>
+                  <Neumorphic
+                    variant="inset"
+                    borderRadius={12}
+                    style={styles.inputWell}
+                  >
                     <TextInput
                       value={targetValue}
                       onChangeText={setTargetValue}
@@ -416,9 +642,18 @@ export default function MeScreen() {
 
               {/* Action Buttons */}
               <View style={styles.formActionRow}>
-                <Pressable onPress={handleCreateHabit} style={styles.submitPressable}>
-                  <Neumorphic variant="button-extruded" borderRadius={24} style={styles.submitBtn}>
-                    <ThemedText style={styles.submitText}>Save Habit</ThemedText>
+                <Pressable
+                  onPress={handleCreateHabit}
+                  style={styles.submitPressable}
+                >
+                  <Neumorphic
+                    variant="button-extruded"
+                    borderRadius={24}
+                    style={styles.submitBtn}
+                  >
+                    <ThemedText style={styles.submitText}>
+                      Save Habit
+                    </ThemedText>
                   </Neumorphic>
                 </Pressable>
               </View>
@@ -433,38 +668,38 @@ export default function MeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fef8f3',
+    backgroundColor: "#fef8f3",
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fef8f3',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fef8f3",
   },
   scrollContainer: {
     paddingTop: 32,
     paddingBottom: 160,
     paddingHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   header: {
-    width: '100%',
+    width: "100%",
     maxWidth: 480,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
     marginBottom: 32,
   },
   pageTitle: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 26,
-    color: '#1d1b19',
+    color: "#1d1b19",
     marginBottom: 4,
   },
   pageSubtitle: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: '#54433a',
+    color: "#54433a",
   },
   addHeaderBtnPressable: {
     height: 48,
@@ -472,16 +707,16 @@ const styles = StyleSheet.create({
   addHeaderBtn: {
     width: 48,
     height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   grid: {
-    width: '100%',
+    width: "100%",
     maxWidth: 480,
     gap: 20,
   },
   cardContainer: {
-    width: '100%',
+    width: "100%",
   },
   card: {
     padding: 20,
@@ -492,117 +727,117 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   cardHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   iconWell: {
     width: 48,
     height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconWellCompleted: {
     width: 48,
     height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   habitTitle: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: '#1d1b19',
+    color: "#1d1b19",
   },
   habitTitleCompleted: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: '#1d1b19',
-    textDecorationLine: 'line-through',
+    color: "#1d1b19",
+    textDecorationLine: "line-through",
     opacity: 0.6,
   },
   habitMeta: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 12,
-    color: '#54433a',
+    color: "#54433a",
     marginTop: 2,
   },
   deleteBtn: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   completedIndicator: {
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   progressContainer: {
     gap: 8,
   },
   progressLabelRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   progressLabel: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: '#54433a',
+    color: "#54433a",
   },
   progressValue: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: '#54433a',
+    color: "#54433a",
   },
   progressBar: {
     height: 14,
     padding: 2,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   progressFill: {
-    height: '100%',
-    backgroundColor: '#ff9f67',
+    height: "100%",
+    backgroundColor: "#ff9f67",
     borderRadius: 6,
   },
   logActionRow: {
     marginTop: 8,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   logPressable: {
     height: 36,
   },
   logBtn: {
     height: 36,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 16,
     gap: 4,
   },
   logBtnText: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 12,
-    color: '#944a19',
+    color: "#944a19",
   },
   booleanActionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingTop: 8,
     borderTopWidth: 1,
-    borderTopColor: '#e6e2dd',
+    borderTopColor: "#e6e2dd",
   },
   targetLabel: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: '#54433a',
+    color: "#54433a",
   },
   checkPressable: {
     height: 36,
@@ -610,86 +845,86 @@ const styles = StyleSheet.create({
   checkBtn: {
     width: 36,
     height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   completedBody: {
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#e6e2dd',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    borderTopColor: "#e6e2dd",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   completedText: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: '#54433a',
-    fontStyle: 'italic',
+    color: "#54433a",
+    fontStyle: "italic",
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(29, 27, 25, 0.4)',
+    backgroundColor: "rgba(29, 27, 25, 0.4)",
   },
   modalOverlayCentered: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   modalOverlayBottom: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   modalSheet: {
-    backgroundColor: '#fef8f3',
+    backgroundColor: "#fef8f3",
     paddingTop: 8,
     paddingHorizontal: 24,
-    shadowColor: '#1d1b19',
+    shadowColor: "#1d1b19",
     shadowOpacity: 0.15,
     shadowRadius: 15,
     elevation: 20,
   },
   modalSheetCentered: {
     borderRadius: 28,
-    width: '100%',
+    width: "100%",
     maxWidth: 480,
-    maxHeight: '80%',
+    maxHeight: "80%",
     paddingBottom: 24,
     shadowOffset: { width: 0, height: 10 },
   },
   modalSheetBottom: {
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
-    width: '100%',
-    paddingBottom: Platform.OS === 'ios' ? 34 : 24,
-    maxHeight: Dimensions.get('window').height * 0.85,
+    width: "100%",
+    paddingBottom: Platform.OS === "ios" ? 34 : 24,
+    maxHeight: Dimensions.get("window").height * 0.85,
     shadowOffset: { width: 0, height: -10 },
   },
   grabHandle: {
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: '#dac2b6',
-    alignSelf: 'center',
+    backgroundColor: "#dac2b6",
+    alignSelf: "center",
     marginBottom: 16,
   },
   modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 20,
   },
   modalTitle: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 22,
-    color: '#1d1b19',
+    color: "#1d1b19",
   },
   closeBtn: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   formScroll: {
     gap: 16,
@@ -698,23 +933,23 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   inputLabel: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: '#54433a',
+    color: "#54433a",
   },
   inputWell: {
     height: 48,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 16,
   },
   input: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: '#1d1b19',
-    outlineStyle: 'none',
+    color: "#1d1b19",
+    outlineStyle: "none",
   } as any,
   optionsRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   optionPressable: {
@@ -722,24 +957,24 @@ const styles = StyleSheet.create({
     height: 40,
   },
   optionBtnActive: {
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   optionBtn: {
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   optionTextActive: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: '#944a19',
+    color: "#944a19",
   },
   optionText: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: '#54433a',
+    color: "#54433a",
   },
   iconsRow: {
     gap: 12,
@@ -751,29 +986,29 @@ const styles = StyleSheet.create({
     height: 44,
   },
   iconBtnActive: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconBtn: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   colorPillActive: {
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 6,
   },
   colorPill: {
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     gap: 6,
   },
   colorDot: {
@@ -790,24 +1025,26 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     height: 50,
-    backgroundColor: '#ff9f67',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#ff9f67",
+    alignItems: "center",
+    justifyContent: "center",
   },
   submitText: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: '#773402',
+    color: "#773402",
   },
   fabContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 110, // Float above bottom tab bar
-    alignSelf: 'center',
-    width: '100%',
+    alignSelf: "center",
+    width: "100%",
     maxWidth: 480,
     height: 56,
     zIndex: 40,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
+  },
+  fabContainerNarrow: {
     paddingHorizontal: 20,
   },
   fabPressable: {
@@ -817,9 +1054,9 @@ const styles = StyleSheet.create({
   fabBtn: {
     width: 56,
     height: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 6,

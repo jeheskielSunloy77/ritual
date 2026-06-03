@@ -4,8 +4,8 @@ import {
   Pressable,
   StyleSheet,
   useColorScheme,
-  Platform,
   SafeAreaView,
+  useWindowDimensions,
 } from "react-native";
 import { Slot, useRouter, usePathname } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -17,11 +17,9 @@ export default function AppTabs() {
   const router = useRouter();
   const pathname = usePathname();
   const scheme = useColorScheme();
+  const { width } = useWindowDimensions();
   const colors = Colors[scheme === "dark" ? "dark" : "light"];
-
-  if (pathname === "/profile") {
-    return <Slot />;
-  }
+  const isWideScreen = width >= 600;
 
   // Map route pathname to active tab
   let activeTab = "home";
@@ -54,8 +52,31 @@ export default function AppTabs() {
       <Neumorphic
         variant="extruded"
         borderRadius={24}
-        style={[styles.navBar, { backgroundColor: colors.background }]}
+        style={[
+          styles.navBar,
+          isWideScreen ? styles.navBarWide : styles.navBarMobile,
+          { backgroundColor: colors.background },
+        ]}
       >
+        {/* Home Tab */}
+        <Pressable onPress={() => navigateTo("home")} style={styles.tabItem}>
+          {activeTab === "home" ? (
+            <Neumorphic
+              variant="button-inset"
+              borderRadius={16}
+              style={styles.activeTabContainer}
+            >
+              <MaterialIcons name="home" size={22} color="#944a19" />
+              <ThemedText style={styles.activeTabText}>Home</ThemedText>
+            </Neumorphic>
+          ) : (
+            <View style={styles.inactiveTabContainer}>
+              <MaterialIcons name="home" size={22} color="#54433a" />
+              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
+            </View>
+          )}
+        </Pressable>
+
         {/* Analytics Tab */}
         <Pressable
           onPress={() => navigateTo("analytics")}
@@ -74,25 +95,6 @@ export default function AppTabs() {
             <View style={styles.inactiveTabContainer}>
               <MaterialIcons name="insights" size={22} color="#54433a" />
               <ThemedText style={styles.inactiveTabText}>Analytics</ThemedText>
-            </View>
-          )}
-        </Pressable>
-
-        {/* Home Tab */}
-        <Pressable onPress={() => navigateTo("home")} style={styles.tabItem}>
-          {activeTab === "home" ? (
-            <Neumorphic
-              variant="button-inset"
-              borderRadius={16}
-              style={styles.activeTabContainer}
-            >
-              <MaterialIcons name="home" size={22} color="#944a19" />
-              <ThemedText style={styles.activeTabText}>Home</ThemedText>
-            </Neumorphic>
-          ) : (
-            <View style={styles.inactiveTabContainer}>
-              <MaterialIcons name="home" size={22} color="#54433a" />
-              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
             </View>
           )}
         </Pressable>
@@ -131,14 +133,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20, // Float above bottom
     alignSelf: "center",
-    width: "90%",
-    maxWidth: 440,
     height: 72,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     paddingHorizontal: 12,
     zIndex: 50,
+  },
+  navBarMobile: {
+    width: "90%",
+    maxWidth: 440,
+  },
+  navBarWide: {
+    width: "100%",
+    maxWidth: 480,
   },
   tabItem: {
     flex: 1,
@@ -149,11 +157,11 @@ const styles = StyleSheet.create({
   activeTabContainer: {
     width: "95%",
     maxWidth: 110,
-    height: 46,
+    height: 56,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
-    gap: 4,
+    flexDirection: "column",
+    gap: 2,
     paddingHorizontal: 8,
   },
   activeTabText: {
@@ -164,8 +172,8 @@ const styles = StyleSheet.create({
   inactiveTabContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
-    gap: 4,
+    flexDirection: "column",
+    gap: 2,
   },
   inactiveTabText: {
     fontFamily: "Handlee-Regular",

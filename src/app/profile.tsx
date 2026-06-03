@@ -15,7 +15,11 @@ import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
-import Animated, { FadeInUp, FadeIn, SlideInDown } from "react-native-reanimated";
+import Animated, {
+  FadeInUp,
+  FadeIn,
+  SlideInDown,
+} from "react-native-reanimated";
 import { useHabits } from "@/context/HabitsContext";
 import { Neumorphic } from "@/components/Neumorphic";
 import { ThemedText } from "@/components/themed-text";
@@ -215,34 +219,49 @@ export default function ProfileScreen() {
           <Neumorphic variant="extruded" borderRadius={24} style={styles.card}>
             <ThemedText style={styles.sectionTitle}>Preferences</ThemedText>
 
-            <Pressable 
-              onPress={() => setThemeModalVisible(true)} 
-              style={[styles.settingListItem, { borderBottomWidth: 1, borderColor: '#e6e2dd' }]}
+            <Pressable
+              onPress={() => setThemeModalVisible(true)}
+              style={[
+                styles.settingListItem,
+                { borderBottomWidth: 1, borderColor: "#e6e2dd" },
+              ]}
             >
               <View style={styles.settingListItemLeft}>
                 <MaterialIcons name="dark-mode" size={22} color="#54433a" />
-                <ThemedText style={styles.settingListItemLabel}>App Theme</ThemedText>
+                <ThemedText style={styles.settingListItemLabel}>
+                  App Theme
+                </ThemedText>
               </View>
               <View style={styles.settingListItemRight}>
                 <ThemedText style={styles.settingListItemValue}>
-                  {themePreference === 'light' ? 'Light Mode' : themePreference === 'dark' ? 'Dark Mode' : 'System Default'}
+                  {themePreference === "light"
+                    ? "Light Mode"
+                    : themePreference === "dark"
+                      ? "Dark Mode"
+                      : "System Default"}
                 </ThemedText>
                 <MaterialIcons name="chevron-right" size={20} color="#877369" />
               </View>
             </Pressable>
 
             {/* Language Row */}
-            <Pressable 
-              onPress={() => setLangModalVisible(true)} 
+            <Pressable
+              onPress={() => setLangModalVisible(true)}
               style={styles.settingListItem}
             >
               <View style={styles.settingListItemLeft}>
                 <MaterialIcons name="language" size={22} color="#54433a" />
-                <ThemedText style={styles.settingListItemLabel}>Language</ThemedText>
+                <ThemedText style={styles.settingListItemLabel}>
+                  Language
+                </ThemedText>
               </View>
               <View style={styles.settingListItemRight}>
                 <ThemedText style={styles.settingListItemValue}>
-                  {languagePreference === 'en' ? 'English' : languagePreference === 'es' ? 'Español' : 'Français'}
+                  {languagePreference === "en"
+                    ? "English"
+                    : languagePreference === "es"
+                      ? "Español"
+                      : "Français"}
                 </ThemedText>
                 <MaterialIcons name="chevron-right" size={20} color="#877369" />
               </View>
@@ -279,61 +298,98 @@ export default function ProfileScreen() {
         visible={themeModalVisible}
         onRequestClose={() => setThemeModalVisible(false)}
       >
-        <View style={[styles.modalOverlay, isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom]}>
-          <Pressable style={StyleSheet.absoluteFill} onPress={() => setThemeModalVisible(false)} />
-          
+        <View
+          style={[
+            styles.modalOverlay,
+            isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom,
+          ]}
+        >
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => setThemeModalVisible(false)}
+          />
+
           <Animated.View
             entering={isWide ? FadeIn.duration(300) : SlideInDown.duration(400)}
-            style={[styles.modalSheet, isWide ? styles.modalSheetCentered : styles.modalSheetBottom]}
+            style={[
+              styles.modalSheet,
+              isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
+            ]}
           >
             {!isWide && <View style={styles.grabHandle} />}
-            
+
             <View style={styles.modalHeader}>
               <ThemedText style={styles.modalTitle}>Select Theme</ThemedText>
-              <Pressable style={styles.closeBtn} onPress={() => setThemeModalVisible(false)}>
+              <Pressable
+                style={styles.closeBtn}
+                onPress={() => setThemeModalVisible(false)}
+              >
                 <MaterialIcons name="close" size={24} color="#54433a" />
               </Pressable>
             </View>
 
             <View style={styles.modalContent}>
               {/* Light Mode */}
-              <Pressable 
-                onPress={() => { setThemePreference('light'); setThemeModalVisible(false); }}
-                style={[styles.modalRow, { borderBottomWidth: 1, borderColor: '#e6e2dd' }]}
+              <Pressable
+                onPress={() => {
+                  setThemePreference("light");
+                  setThemeModalVisible(false);
+                }}
+                style={[
+                  styles.modalRow,
+                  { borderBottomWidth: 1, borderColor: "#e6e2dd" },
+                ]}
               >
                 <View style={styles.modalRowLeft}>
                   <MaterialIcons name="wb-sunny" size={20} color="#877369" />
-                  <ThemedText style={styles.modalRowText}>Light Mode</ThemedText>
+                  <ThemedText style={styles.modalRowText}>
+                    Light Mode
+                  </ThemedText>
                 </View>
-                {themePreference === 'light' && (
+                {themePreference === "light" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
 
               {/* Dark Mode */}
-              <Pressable 
-                onPress={() => { setThemePreference('dark'); setThemeModalVisible(false); }}
-                style={[styles.modalRow, { borderBottomWidth: 1, borderColor: '#e6e2dd' }]}
+              <Pressable
+                onPress={() => {
+                  setThemePreference("dark");
+                  setThemeModalVisible(false);
+                }}
+                style={[
+                  styles.modalRow,
+                  { borderBottomWidth: 1, borderColor: "#e6e2dd" },
+                ]}
               >
                 <View style={styles.modalRowLeft}>
                   <MaterialIcons name="nights-stay" size={20} color="#877369" />
                   <ThemedText style={styles.modalRowText}>Dark Mode</ThemedText>
                 </View>
-                {themePreference === 'dark' && (
+                {themePreference === "dark" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
 
               {/* System Default */}
-              <Pressable 
-                onPress={() => { setThemePreference('system' as any); setThemeModalVisible(false); }}
+              <Pressable
+                onPress={() => {
+                  setThemePreference("system" as any);
+                  setThemeModalVisible(false);
+                }}
                 style={styles.modalRow}
               >
                 <View style={styles.modalRowLeft}>
-                  <MaterialIcons name="settings-suggest" size={20} color="#877369" />
-                  <ThemedText style={styles.modalRowText}>System Default</ThemedText>
+                  <MaterialIcons
+                    name="settings-suggest"
+                    size={20}
+                    color="#877369"
+                  />
+                  <ThemedText style={styles.modalRowText}>
+                    System Default
+                  </ThemedText>
                 </View>
-                {themePreference === ('system' as any) && (
+                {themePreference === ("system" as any) && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
@@ -349,61 +405,90 @@ export default function ProfileScreen() {
         visible={langModalVisible}
         onRequestClose={() => setLangModalVisible(false)}
       >
-        <View style={[styles.modalOverlay, isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom]}>
-          <Pressable style={StyleSheet.absoluteFill} onPress={() => setLangModalVisible(false)} />
-          
+        <View
+          style={[
+            styles.modalOverlay,
+            isWide ? styles.modalOverlayCentered : styles.modalOverlayBottom,
+          ]}
+        >
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => setLangModalVisible(false)}
+          />
+
           <Animated.View
             entering={isWide ? FadeIn.duration(300) : SlideInDown.duration(400)}
-            style={[styles.modalSheet, isWide ? styles.modalSheetCentered : styles.modalSheetBottom]}
+            style={[
+              styles.modalSheet,
+              isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
+            ]}
           >
             {!isWide && <View style={styles.grabHandle} />}
-            
+
             <View style={styles.modalHeader}>
               <ThemedText style={styles.modalTitle}>Select Language</ThemedText>
-              <Pressable style={styles.closeBtn} onPress={() => setLangModalVisible(false)}>
+              <Pressable
+                style={styles.closeBtn}
+                onPress={() => setLangModalVisible(false)}
+              >
                 <MaterialIcons name="close" size={24} color="#54433a" />
               </Pressable>
             </View>
 
             <View style={styles.modalContent}>
               {/* English */}
-              <Pressable 
-                onPress={() => { setLanguagePreference('en'); setLangModalVisible(false); }}
-                style={[styles.modalRow, { borderBottomWidth: 1, borderColor: '#e6e2dd' }]}
+              <Pressable
+                onPress={() => {
+                  setLanguagePreference("en");
+                  setLangModalVisible(false);
+                }}
+                style={[
+                  styles.modalRow,
+                  { borderBottomWidth: 1, borderColor: "#e6e2dd" },
+                ]}
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇺🇸</ThemedText>
                   <ThemedText style={styles.modalRowText}>English</ThemedText>
                 </View>
-                {languagePreference === 'en' && (
+                {languagePreference === "en" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
 
               {/* Spanish */}
-              <Pressable 
-                onPress={() => { setLanguagePreference('es'); setLangModalVisible(false); }}
-                style={[styles.modalRow, { borderBottomWidth: 1, borderColor: '#e6e2dd' }]}
+              <Pressable
+                onPress={() => {
+                  setLanguagePreference("es");
+                  setLangModalVisible(false);
+                }}
+                style={[
+                  styles.modalRow,
+                  { borderBottomWidth: 1, borderColor: "#e6e2dd" },
+                ]}
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇪🇸</ThemedText>
                   <ThemedText style={styles.modalRowText}>Español</ThemedText>
                 </View>
-                {languagePreference === 'es' && (
+                {languagePreference === "es" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
 
               {/* French */}
-              <Pressable 
-                onPress={() => { setLanguagePreference('fr'); setLangModalVisible(false); }}
+              <Pressable
+                onPress={() => {
+                  setLanguagePreference("fr");
+                  setLangModalVisible(false);
+                }}
                 style={styles.modalRow}
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇫🇷</ThemedText>
                   <ThemedText style={styles.modalRowText}>Français</ThemedText>
                 </View>
-                {languagePreference === 'fr' && (
+                {languagePreference === "fr" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
                 )}
               </Pressable>
@@ -513,7 +598,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: "#944a19",
+    color: "#1d1b19",
     marginBottom: 16,
     fontWeight: "800",
   },
@@ -564,55 +649,55 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   settingListItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: 16,
-    width: '100%',
+    width: "100%",
   },
   settingListItemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   settingListItemLabel: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: '#1d1b19',
-    fontWeight: '700',
+    color: "#1d1b19",
+    fontWeight: "700",
   },
   settingListItemRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 6,
   },
   settingListItemValue: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: '#877369',
+    color: "#877369",
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    justifyContent: 'flex-end',
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    justifyContent: "flex-end",
   },
   modalOverlayCentered: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   modalOverlayBottom: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   modalSheet: {
-    backgroundColor: '#fef8f3',
+    backgroundColor: "#fef8f3",
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingHorizontal: 24,
     paddingTop: 12,
-    paddingBottom: Platform.OS === 'ios' ? 40 : 24,
-    width: '100%',
-    shadowColor: '#000',
+    paddingBottom: Platform.OS === "ios" ? 40 : 24,
+    width: "100%",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -632,53 +717,53 @@ const styles = StyleSheet.create({
     width: 48,
     height: 5,
     borderRadius: 2.5,
-    backgroundColor: '#e6e2dd',
-    alignSelf: 'center',
+    backgroundColor: "#e6e2dd",
+    alignSelf: "center",
     marginBottom: 20,
   },
   modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 16,
-    width: '100%',
+    width: "100%",
   },
   modalTitle: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 20,
-    color: '#944a19',
-    fontWeight: '800',
+    color: "#1d1b19",
+    fontWeight: "800",
   },
   closeBtn: {
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContent: {
-    width: '100%',
+    width: "100%",
   },
   modalRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: 14,
-    width: '100%',
+    width: "100%",
   },
   modalRowLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 12,
   },
   modalRowText: {
-    fontFamily: 'Handlee-Regular',
+    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: '#1d1b19',
+    color: "#1d1b19",
   },
   modalRowEmoji: {
     fontSize: 18,
     width: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   logoutContainer: {
     width: "100%",

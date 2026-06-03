@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, useColorScheme, Platform, SafeAreaView } from 'react-native';
+import { View, Pressable, StyleSheet, useColorScheme, SafeAreaView, useWindowDimensions } from 'react-native';
 import { Slot, useRouter, usePathname } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Neumorphic } from './Neumorphic';
@@ -10,7 +10,9 @@ export default function AppTabs() {
   const router = useRouter();
   const pathname = usePathname();
   const scheme = useColorScheme();
+  const { width } = useWindowDimensions();
   const colors = Colors[scheme === 'dark' ? 'dark' : 'light'];
+  const isWideScreen = width >= 600;
 
   if (pathname === '/profile') {
     return <Slot />;
@@ -45,7 +47,11 @@ export default function AppTabs() {
       <Neumorphic
         variant="extruded"
         borderRadius={24}
-        style={[styles.navBar, { backgroundColor: colors.background }]}
+        style={[
+          styles.navBar,
+          isWideScreen ? styles.navBarWide : styles.navBarMobile,
+          { backgroundColor: colors.background },
+        ]}
       >
         {/* Analytics Tab */}
         <Pressable onPress={() => navigateTo('analytics')} style={styles.tabItem}>
@@ -107,14 +113,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20, // Float above bottom
     alignSelf: 'center',
-    width: '90%',
-    maxWidth: 440,
     height: 72,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingHorizontal: 12,
     zIndex: 50,
+  },
+  navBarMobile: {
+    width: '90%',
+    maxWidth: 440,
+  },
+  navBarWide: {
+    width: '100%',
+    maxWidth: 480,
   },
   tabItem: {
     flex: 1,
