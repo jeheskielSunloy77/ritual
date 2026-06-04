@@ -103,7 +103,7 @@ export default function HomeScreen() {
         entering={FadeInUp.duration(600).delay(200)}
         style={styles.statusContainer}
       >
-        <ThemedText style={styles.statusText}>
+        <ThemedText themeColor="textSecondary" style={styles.statusText}>
           {allCompleted
             ? "All habits completed. You've earned 50 points."
             : `${habits.filter((h) => !h.completed).length} habits to start your day.`}
@@ -155,14 +155,12 @@ export default function HomeScreen() {
                   {/* Habit Info */}
                   <View style={styles.infoContainer}>
                     <ThemedText
-                      style={[
-                        styles.habitTitle,
-                        habit.completed && styles.textCompleted,
-                      ]}
+                      themeColor="text"
+                      style={[styles.habitTitle, habit.completed && styles.textCompleted]}
                     >
                       {habit.title}
                     </ThemedText>
-                    <ThemedText style={styles.habitSubtitle}>
+                    <ThemedText themeColor="textSecondary" style={styles.habitSubtitle}>
                       {habit.subtitle}
                     </ThemedText>
                   </View>
@@ -208,10 +206,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   greeting: {
-    fontFamily: "Handlee-Regular",
     fontSize: 40,
     textAlign: "center",
-    color: "#1d1b19",
     lineHeight: 48,
   },
   plinthContainer: {
@@ -242,9 +238,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   statusText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: "#54433a",
     textAlign: "center",
   },
   listContainer: {
@@ -292,18 +286,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   habitTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: "#1d1b19",
   },
   textCompleted: {
     textDecorationLine: "line-through",
     opacity: 0.6,
   },
   habitSubtitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: "#54433a",
     marginTop: 2,
   },
   iconWell: {

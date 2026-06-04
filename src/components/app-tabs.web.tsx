@@ -63,7 +63,9 @@ export default function AppTabs() {
           ) : (
             <View style={styles.inactiveTabContainer}>
               <MaterialIcons name="insights" size={22} color="#54433a" />
-              <ThemedText style={styles.inactiveTabText}>Analytics</ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.inactiveTabText}>
+                Analytics
+              </ThemedText>
             </View>
           )}
         </Pressable>
@@ -78,7 +80,9 @@ export default function AppTabs() {
           ) : (
             <View style={styles.inactiveTabContainer}>
               <MaterialIcons name="home" size={22} color="#54433a" />
-              <ThemedText style={styles.inactiveTabText}>Home</ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.inactiveTabText}>
+                Home
+              </ThemedText>
             </View>
           )}
         </Pressable>
@@ -93,7 +97,9 @@ export default function AppTabs() {
           ) : (
             <View style={styles.inactiveTabContainer}>
               <MaterialIcons name="person" size={22} color="#54433a" />
-              <ThemedText style={styles.inactiveTabText}>Me</ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.inactiveTabText}>
+                Me
+              </ThemedText>
             </View>
           )}
         </Pressable>
@@ -145,7 +151,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   activeTabText: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#944a19',
   },
@@ -156,7 +161,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   inactiveTabText: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 12,
     color: '#54433a',
   },

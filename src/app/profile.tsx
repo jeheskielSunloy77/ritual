@@ -172,10 +172,14 @@ export default function ProfileScreen() {
           style={styles.formContainer}
         >
           <Neumorphic variant="extruded" borderRadius={24} style={styles.card}>
-            <ThemedText style={styles.sectionTitle}>Profile Details</ThemedText>
+            <ThemedText themeColor="text" style={styles.sectionTitle}>
+              Profile Details
+            </ThemedText>
 
             <View style={styles.inputContainer}>
-              <ThemedText style={styles.inputLabel}>Username</ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
+                Username
+              </ThemedText>
               <Neumorphic
                 variant="inset"
                 borderRadius={12}
@@ -217,7 +221,9 @@ export default function ProfileScreen() {
           style={styles.formContainer}
         >
           <Neumorphic variant="extruded" borderRadius={24} style={styles.card}>
-            <ThemedText style={styles.sectionTitle}>Preferences</ThemedText>
+            <ThemedText themeColor="text" style={styles.sectionTitle}>
+              Preferences
+            </ThemedText>
 
             <Pressable
               onPress={() => setThemeModalVisible(true)}
@@ -228,12 +234,12 @@ export default function ProfileScreen() {
             >
               <View style={styles.settingListItemLeft}>
                 <MaterialIcons name="dark-mode" size={22} color="#54433a" />
-                <ThemedText style={styles.settingListItemLabel}>
+                <ThemedText themeColor="text" style={styles.settingListItemLabel}>
                   App Theme
                 </ThemedText>
               </View>
               <View style={styles.settingListItemRight}>
-                <ThemedText style={styles.settingListItemValue}>
+                <ThemedText themeColor="textSecondary" style={styles.settingListItemValue}>
                   {themePreference === "light"
                     ? "Light Mode"
                     : themePreference === "dark"
@@ -251,12 +257,12 @@ export default function ProfileScreen() {
             >
               <View style={styles.settingListItemLeft}>
                 <MaterialIcons name="language" size={22} color="#54433a" />
-                <ThemedText style={styles.settingListItemLabel}>
+                <ThemedText themeColor="text" style={styles.settingListItemLabel}>
                   Language
                 </ThemedText>
               </View>
               <View style={styles.settingListItemRight}>
-                <ThemedText style={styles.settingListItemValue}>
+                <ThemedText themeColor="textSecondary" style={styles.settingListItemValue}>
                   {languagePreference === "en"
                     ? "English"
                     : languagePreference === "es"
@@ -287,7 +293,9 @@ export default function ProfileScreen() {
               <ThemedText style={styles.logoutText}>Log Out</ThemedText>
             </Neumorphic>
           </Pressable>
-          <ThemedText style={styles.versionText}>Ritual App v1.0.0</ThemedText>
+          <ThemedText themeColor="textSecondary" style={styles.versionText}>
+            Ritual App v1.0.0
+          </ThemedText>
         </Animated.View>
       </ScrollView>
 
@@ -319,7 +327,9 @@ export default function ProfileScreen() {
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
-              <ThemedText style={styles.modalTitle}>Select Theme</ThemedText>
+              <ThemedText themeColor="text" style={styles.modalTitle}>
+                Select Theme
+              </ThemedText>
               <Pressable
                 style={styles.closeBtn}
                 onPress={() => setThemeModalVisible(false)}
@@ -342,7 +352,7 @@ export default function ProfileScreen() {
               >
                 <View style={styles.modalRowLeft}>
                   <MaterialIcons name="wb-sunny" size={20} color="#877369" />
-                  <ThemedText style={styles.modalRowText}>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
                     Light Mode
                   </ThemedText>
                 </View>
@@ -364,7 +374,9 @@ export default function ProfileScreen() {
               >
                 <View style={styles.modalRowLeft}>
                   <MaterialIcons name="nights-stay" size={20} color="#877369" />
-                  <ThemedText style={styles.modalRowText}>Dark Mode</ThemedText>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
+                    Dark Mode
+                  </ThemedText>
                 </View>
                 {themePreference === "dark" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
@@ -385,7 +397,7 @@ export default function ProfileScreen() {
                     size={20}
                     color="#877369"
                   />
-                  <ThemedText style={styles.modalRowText}>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
                     System Default
                   </ThemedText>
                 </View>
@@ -426,7 +438,9 @@ export default function ProfileScreen() {
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
-              <ThemedText style={styles.modalTitle}>Select Language</ThemedText>
+              <ThemedText themeColor="text" style={styles.modalTitle}>
+                Select Language
+              </ThemedText>
               <Pressable
                 style={styles.closeBtn}
                 onPress={() => setLangModalVisible(false)}
@@ -449,7 +463,9 @@ export default function ProfileScreen() {
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇺🇸</ThemedText>
-                  <ThemedText style={styles.modalRowText}>English</ThemedText>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
+                    English
+                  </ThemedText>
                 </View>
                 {languagePreference === "en" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
@@ -469,7 +485,9 @@ export default function ProfileScreen() {
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇪🇸</ThemedText>
-                  <ThemedText style={styles.modalRowText}>Español</ThemedText>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
+                    Español
+                  </ThemedText>
                 </View>
                 {languagePreference === "es" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
@@ -486,7 +504,9 @@ export default function ProfileScreen() {
               >
                 <View style={styles.modalRowLeft}>
                   <ThemedText style={styles.modalRowEmoji}>🇫🇷</ThemedText>
-                  <ThemedText style={styles.modalRowText}>Français</ThemedText>
+                  <ThemedText themeColor="text" style={styles.modalRowText}>
+                    Français
+                  </ThemedText>
                 </View>
                 {languagePreference === "fr" && (
                   <MaterialIcons name="check" size={20} color="#944a19" />
@@ -525,7 +545,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   topBarTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 22,
     color: "#944a19",
     fontWeight: "800",
@@ -580,7 +599,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   removePhotoText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
     color: "#ba1a1a",
     textDecorationLine: "underline",
@@ -596,9 +614,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   sectionTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: "#1d1b19",
     marginBottom: 16,
     fontWeight: "800",
   },
@@ -607,9 +623,7 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   inputLabel: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#54433a",
     marginBottom: 6,
   },
   inputField: {
@@ -643,7 +657,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#944a19",
   },
   saveBtnText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
     color: "#944a19",
     fontWeight: "700",
@@ -661,9 +674,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   settingListItemLabel: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: "#1d1b19",
     fontWeight: "700",
   },
   settingListItemRight: {
@@ -672,9 +683,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   settingListItemValue: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#877369",
   },
   modalOverlay: {
     flex: 1,
@@ -729,9 +738,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   modalTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 20,
-    color: "#1d1b19",
     fontWeight: "800",
   },
   closeBtn: {
@@ -756,9 +763,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   modalRowText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
-    color: "#1d1b19",
   },
   modalRowEmoji: {
     fontSize: 18,
@@ -785,15 +790,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   logoutText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
     color: "#ba1a1a",
     fontWeight: "700",
   },
   versionText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 12,
-    color: "#877369",
     marginTop: 8,
   },
 });

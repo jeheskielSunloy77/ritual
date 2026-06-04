@@ -41,7 +41,10 @@ function ChartBar({ day, percentage, isToday }: { day: string; percentage: numbe
           />
         )}
       </Neumorphic>
-      <ThemedText style={[styles.barLabel, isToday && styles.barLabelToday]}>
+      <ThemedText
+        themeColor={isToday ? "text" : "textSecondary"}
+        style={[styles.barLabel, isToday && styles.barLabelToday]}
+      >
         {day}
       </ThemedText>
     </View>
@@ -70,8 +73,12 @@ export default function AnalyticsScreen() {
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.container}>
       {/* Page Header */}
       <Animated.View entering={FadeInUp.duration(600)} style={styles.header}>
-        <ThemedText style={styles.title}>Analytics</ThemedText>
-        <ThemedText style={styles.subtitle}>Track your gentle progress.</ThemedText>
+        <ThemedText themeColor="text" style={styles.title}>
+          Analytics
+        </ThemedText>
+        <ThemedText themeColor="textSecondary" style={styles.subtitle}>
+          Track your gentle progress.
+        </ThemedText>
       </Animated.View>
 
       {/* Filter Pills Scroll View */}
@@ -106,7 +113,7 @@ export default function AnalyticsScreen() {
                     borderRadius={20}
                     style={styles.filterPillInactive}
                   >
-                    <ThemedText style={styles.filterTextInactive}>
+                    <ThemedText themeColor="textSecondary" style={styles.filterTextInactive}>
                       {filter.label}
                     </ThemedText>
                   </Neumorphic>
@@ -123,8 +130,12 @@ export default function AnalyticsScreen() {
           {/* Card Header */}
           <View style={styles.chartHeader}>
             <View>
-              <ThemedText style={styles.chartTitle}>Weekly Flow</ThemedText>
-              <ThemedText style={styles.chartSubtitle}>This Week vs Last Week</ThemedText>
+              <ThemedText themeColor="text" style={styles.chartTitle}>
+                Weekly Flow
+              </ThemedText>
+              <ThemedText themeColor="textSecondary" style={styles.chartSubtitle}>
+                This Week vs Last Week
+              </ThemedText>
             </View>
             <View style={styles.trendContainer}>
               <MaterialIcons name="trending-up" size={20} color="#944a19" />
@@ -150,7 +161,9 @@ export default function AnalyticsScreen() {
 
       {/* Stats Cards Section */}
       <Animated.View entering={FadeInUp.duration(600).delay(300)} style={styles.statsContainer}>
-        <ThemedText style={styles.sectionTitle}>Key Metrics</ThemedText>
+        <ThemedText themeColor="text" style={styles.sectionTitle}>
+          Key Metrics
+        </ThemedText>
 
         <View style={styles.statsGrid}>
           {/* Streak Card */}
@@ -158,10 +171,12 @@ export default function AnalyticsScreen() {
             <View style={styles.statIconContainer}>
               <MaterialIcons name="local-fire-department" size={24} color="#944a19" />
             </View>
-            <ThemedText style={styles.statValue}>
+            <ThemedText themeColor="text" style={styles.statValue}>
               {streakStats.currentStreak} Days
             </ThemedText>
-            <ThemedText style={styles.statLabel}>Current Streak</ThemedText>
+            <ThemedText themeColor="textSecondary" style={styles.statLabel}>
+              Current Streak
+            </ThemedText>
           </Neumorphic>
 
           {/* Completion Rate Card */}
@@ -169,10 +184,12 @@ export default function AnalyticsScreen() {
             <View style={styles.statIconContainer}>
               <MaterialIcons name="insights" size={24} color="#944a19" />
             </View>
-            <ThemedText style={styles.statValue}>
+            <ThemedText themeColor="text" style={styles.statValue}>
               {streakStats.completionRate}%
             </ThemedText>
-            <ThemedText style={styles.statLabel}>Completion Rate</ThemedText>
+            <ThemedText themeColor="textSecondary" style={styles.statLabel}>
+              Completion Rate
+            </ThemedText>
           </Neumorphic>
         </View>
       </Animated.View>
@@ -203,15 +220,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 26,
-    color: '#1d1b19',
     marginBottom: 4,
   },
   subtitle: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 14,
-    color: '#54433a',
   },
   filterContainer: {
     width: '100%',
@@ -234,7 +247,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterTextActive: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#944a19',
   },
@@ -245,9 +257,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterTextInactive: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 14,
-    color: '#54433a',
   },
   chartCardContainer: {
     width: '100%',
@@ -264,14 +274,10 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   chartTitle: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 20,
-    color: '#1d1b19',
   },
   chartSubtitle: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 12,
-    color: '#54433a',
     marginTop: 2,
   },
   trendContainer: {
@@ -280,7 +286,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   trendText: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 14,
     color: '#944a19',
   },
@@ -315,12 +320,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#944a19', // primary active
   },
   barLabel: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 12,
-    color: '#54433a',
   },
   barLabelToday: {
-    fontFamily: 'Handlee-Regular',
     color: '#944a19',
   },
   statsContainer: {
@@ -328,9 +330,7 @@ const styles = StyleSheet.create({
     maxWidth: 480,
   },
   sectionTitle: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 18,
-    color: '#1d1b19',
     marginBottom: 16,
   },
   statsGrid: {
@@ -354,13 +354,9 @@ const styles = StyleSheet.create({
     borderColor: '#e6e2dd',
   },
   statValue: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 22,
-    color: '#1d1b19',
   },
   statLabel: {
-    fontFamily: 'Handlee-Regular',
     fontSize: 12,
-    color: '#54433a',
   },
 });

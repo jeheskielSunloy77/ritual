@@ -108,8 +108,10 @@ export default function MeScreen() {
         {/* Page Header */}
         <Animated.View entering={FadeInUp.duration(600)} style={styles.header}>
           <View>
-            <ThemedText style={styles.pageTitle}>My Habits</ThemedText>
-            <ThemedText style={styles.pageSubtitle}>
+            <ThemedText themeColor="text" style={styles.pageTitle}>
+              My Habits
+            </ThemedText>
+            <ThemedText themeColor="textSecondary" style={styles.pageSubtitle}>
               Your active routines to nurture.
             </ThemedText>
           </View>
@@ -170,10 +172,10 @@ export default function MeScreen() {
                           />
                         </Neumorphic>
                         <View>
-                          <ThemedText style={styles.habitTitleCompleted}>
+                          <ThemedText themeColor="text" style={styles.habitTitleCompleted}>
                             {habit.title}
                           </ThemedText>
-                          <ThemedText style={styles.habitMeta}>
+                          <ThemedText themeColor="textSecondary" style={styles.habitMeta}>
                             {habit.frequency.charAt(0).toUpperCase() +
                               habit.frequency.slice(1)}
                           </ThemedText>
@@ -191,7 +193,7 @@ export default function MeScreen() {
                     </View>
 
                     <View style={styles.completedBody}>
-                      <ThemedText style={styles.completedText}>
+                      <ThemedText themeColor="textSecondary" style={styles.completedText}>
                         Great job! Completed today.
                       </ThemedText>
                       <Pressable
@@ -227,10 +229,10 @@ export default function MeScreen() {
                           />
                         </Neumorphic>
                         <View>
-                          <ThemedText style={styles.habitTitle}>
+                          <ThemedText themeColor="text" style={styles.habitTitle}>
                             {habit.title}
                           </ThemedText>
-                          <ThemedText style={styles.habitMeta}>
+                          <ThemedText themeColor="textSecondary" style={styles.habitMeta}>
                             {habit.frequency.charAt(0).toUpperCase() +
                               habit.frequency.slice(1)}
                           </ThemedText>
@@ -253,10 +255,10 @@ export default function MeScreen() {
                     {habit.target_type === "counter" ? (
                       <View style={styles.progressContainer}>
                         <View style={styles.progressLabelRow}>
-                          <ThemedText style={styles.progressLabel}>
+                          <ThemedText themeColor="textSecondary" style={styles.progressLabel}>
                             Progress
                           </ThemedText>
-                          <ThemedText style={styles.progressValue}>
+                          <ThemedText themeColor="textSecondary" style={styles.progressValue}>
                             {habit.current_progress}/{habit.target_value}
                           </ThemedText>
                         </View>
@@ -298,7 +300,7 @@ export default function MeScreen() {
                     ) : (
                       /* Toggle Check if boolean */
                       <View style={styles.booleanActionRow}>
-                        <ThemedText style={styles.targetLabel}>
+                        <ThemedText themeColor="textSecondary" style={styles.targetLabel}>
                           {habit.subtitle}
                         </ThemedText>
                         <Pressable
@@ -380,7 +382,7 @@ export default function MeScreen() {
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
-              <ThemedText style={styles.modalTitle}>
+              <ThemedText themeColor="text" style={styles.modalTitle}>
                 Create New Habit
               </ThemedText>
               <Pressable
@@ -394,7 +396,9 @@ export default function MeScreen() {
             <ScrollView contentContainerStyle={styles.formScroll}>
               {/* Title Input */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Habit Title</ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
+                  Habit Title
+                </ThemedText>
                 <Neumorphic
                   variant="inset"
                   borderRadius={12}
@@ -412,7 +416,7 @@ export default function MeScreen() {
 
               {/* Subtitle Input */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
                   Description / Goal
                 </ThemedText>
                 <Neumorphic
@@ -432,7 +436,9 @@ export default function MeScreen() {
 
               {/* Frequency selection */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Frequency</ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
+                  Frequency
+                </ThemedText>
                 <View style={styles.optionsRow}>
                   {["daily", "weekdays", "weekends"].map((f) => {
                     const isSelected = frequency === f;
@@ -458,7 +464,7 @@ export default function MeScreen() {
                             borderRadius={16}
                             style={styles.optionBtn}
                           >
-                            <ThemedText style={styles.optionText}>
+                            <ThemedText themeColor="textSecondary" style={styles.optionText}>
                               {f.charAt(0).toUpperCase() + f.slice(1)}
                             </ThemedText>
                           </Neumorphic>
@@ -471,7 +477,9 @@ export default function MeScreen() {
 
               {/* Icon selection */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Icon Category</ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
+                  Icon Category
+                </ThemedText>
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
@@ -518,7 +526,9 @@ export default function MeScreen() {
 
               {/* Color Theme selection */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>Color Accent</ThemedText>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
+                  Color Accent
+                </ThemedText>
                 <View style={styles.optionsRow}>
                   {(["primary", "secondary", "tertiary"] as const).map((c) => {
                     const isSelected = color === c;
@@ -561,7 +571,7 @@ export default function MeScreen() {
                                 { backgroundColor: cColors[c] },
                               ]}
                             />
-                            <ThemedText style={styles.optionText}>
+                            <ThemedText themeColor="textSecondary" style={styles.optionText}>
                               {c.charAt(0).toUpperCase() + c.slice(1)}
                             </ThemedText>
                           </Neumorphic>
@@ -574,7 +584,7 @@ export default function MeScreen() {
 
               {/* Target Type selection */}
               <View style={styles.formGroup}>
-                <ThemedText style={styles.inputLabel}>
+                <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
                   Goal Target Mode
                 </ThemedText>
                 <View style={styles.optionsRow}>
@@ -604,7 +614,7 @@ export default function MeScreen() {
                             borderRadius={16}
                             style={styles.optionBtn}
                           >
-                            <ThemedText style={styles.optionText}>
+                            <ThemedText themeColor="textSecondary" style={styles.optionText}>
                               {t === "boolean"
                                 ? "Simple Check"
                                 : "Counter Number"}
@@ -620,7 +630,7 @@ export default function MeScreen() {
               {/* Target Value input if counter */}
               {targetType === "counter" && (
                 <View style={styles.formGroup}>
-                  <ThemedText style={styles.inputLabel}>
+                  <ThemedText themeColor="textSecondary" style={styles.inputLabel}>
                     Target Goal (e.g. 8 times)
                   </ThemedText>
                   <Neumorphic
@@ -691,15 +701,11 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   pageTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 26,
-    color: "#1d1b19",
     marginBottom: 4,
   },
   pageSubtitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#54433a",
   },
   addHeaderBtnPressable: {
     height: 48,
@@ -749,21 +755,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   habitTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: "#1d1b19",
   },
   habitTitleCompleted: {
-    fontFamily: "Handlee-Regular",
     fontSize: 18,
-    color: "#1d1b19",
     textDecorationLine: "line-through",
     opacity: 0.6,
   },
   habitMeta: {
-    fontFamily: "Handlee-Regular",
     fontSize: 12,
-    color: "#54433a",
     marginTop: 2,
   },
   deleteBtn: {
@@ -787,14 +787,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   progressLabel: {
-    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: "#54433a",
   },
   progressValue: {
-    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: "#54433a",
   },
   progressBar: {
     height: 14,
@@ -822,7 +818,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   logBtnText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 12,
     color: "#944a19",
   },
@@ -835,9 +830,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#e6e2dd",
   },
   targetLabel: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#54433a",
   },
   checkPressable: {
     height: 36,
@@ -858,9 +851,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   completedText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#54433a",
     fontStyle: "italic",
   },
   modalOverlay: {
@@ -915,9 +906,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalTitle: {
-    fontFamily: "Handlee-Regular",
     fontSize: 22,
-    color: "#1d1b19",
   },
   closeBtn: {
     width: 36,
@@ -933,9 +922,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   inputLabel: {
-    fontFamily: "Handlee-Regular",
     fontSize: 14,
-    color: "#54433a",
   },
   inputWell: {
     height: 48,
@@ -967,14 +954,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   optionTextActive: {
-    fontFamily: "Handlee-Regular",
     fontSize: 13,
     color: "#944a19",
   },
   optionText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 13,
-    color: "#54433a",
   },
   iconsRow: {
     gap: 12,
@@ -1030,7 +1014,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submitText: {
-    fontFamily: "Handlee-Regular",
     fontSize: 16,
     color: "#773402",
   },
