@@ -112,7 +112,7 @@ export default function HomeScreen() {
       {/* Habit Cards List */}
       <View style={styles.listContainer}>
         {habits.map((habit, index) => {
-          const iconName = habit.icon as any;
+          const iconName = (habit.icon || "").replace(/_/g, "-") as any;
 
           return (
             <Animated.View

@@ -156,24 +156,28 @@ export function HabitsProvider({ children }: { children: React.ReactNode }) {
     const habit = habits.find(h => h.id === habitId);
     if (!habit) return;
 
-    let newValue = habit.current_progress;
+    const currentProgress = habit.current_progress ?? 0;
+    const targetValue = habit.target_value ?? 1;
+    const isCompleted = habit.completed ?? false;
+
+    let newValue = currentProgress;
     if (habit.target_type === 'boolean') {
-      newValue = habit.completed ? 0 : 1;
+      newValue = isCompleted ? 0 : 1;
     } else {
       if (increment) {
-        newValue = Math.min(habit.target_value, habit.current_progress + 1);
+        newValue = Math.min(targetValue, currentProgress + 1);
       } else {
-        newValue = Math.max(0, habit.current_progress - 1);
+        newValue = Math.max(0, currentProgress - 1);
       }
     }
 
-    const completed = newValue >= habit.target_value;
+    const completed = newValue >= targetValue;
 
     const log: HabitLog = {
       id: `${habitId}_${currentDate}`,
       habit_id: habitId,
       date: currentDate,
-      value: newValue,
+      value: typeof newValue === 'number' && !isNaN(newValue) ? newValue : 0,
       completed,
       created_at: new Date().toISOString()
     };

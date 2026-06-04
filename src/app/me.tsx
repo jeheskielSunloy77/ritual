@@ -45,7 +45,7 @@ export default function MeScreen() {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [frequency, setFrequency] = useState("daily"); // 'daily' | 'weekdays' | 'weekends'
-  const [icon, setIcon] = useState("water_drop");
+  const [icon, setIcon] = useState("water-drop");
   const [color, setColor] = useState<"primary" | "secondary" | "tertiary">(
     "primary",
   );
@@ -80,7 +80,7 @@ export default function MeScreen() {
     setTitle("");
     setSubtitle("");
     setFrequency("daily");
-    setIcon("water_drop");
+    setIcon("water-drop");
     setColor("primary");
     setTargetType("boolean");
     setTargetValue("1");
@@ -92,14 +92,14 @@ export default function MeScreen() {
   };
 
   const availableIcons = [
-    "water_drop",
-    "self_improvement",
-    "menu_book",
-    "directions_walk",
-    "fitness_center",
+    "water-drop",
+    "self-improvement",
+    "menu-book",
+    "directions-walk",
+    "fitness-center",
     "hotel",
     "favorite",
-    "emoji_objects",
+    "emoji-objects",
   ];
 
   return (
@@ -135,7 +135,7 @@ export default function MeScreen() {
           style={styles.grid}
         >
           {habits.map((habit) => {
-            const iconName = habit.icon as any;
+            const iconName = (habit.icon || "").replace(/_/g, "-") as any;
             const progressPercent =
               habit.target_type === "counter"
                 ? Math.round(
@@ -176,8 +176,8 @@ export default function MeScreen() {
                             {habit.title}
                           </ThemedText>
                           <ThemedText themeColor="textSecondary" style={styles.habitMeta}>
-                            {habit.frequency.charAt(0).toUpperCase() +
-                              habit.frequency.slice(1)}
+                            {(habit.frequency || "daily").charAt(0).toUpperCase() +
+                              (habit.frequency || "daily").slice(1)}
                           </ThemedText>
                         </View>
                       </View>
@@ -233,8 +233,8 @@ export default function MeScreen() {
                             {habit.title}
                           </ThemedText>
                           <ThemedText themeColor="textSecondary" style={styles.habitMeta}>
-                            {habit.frequency.charAt(0).toUpperCase() +
-                              habit.frequency.slice(1)}
+                            {(habit.frequency || "daily").charAt(0).toUpperCase() +
+                              (habit.frequency || "daily").slice(1)}
                           </ThemedText>
                         </View>
                       </View>

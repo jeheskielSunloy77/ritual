@@ -15,6 +15,21 @@ export async function initDatabase(): Promise<void> {
   
   // Enable foreign keys
   await db.execAsync('PRAGMA foreign_keys = ON;');
+
+  // Inspect existing schema to handle structural upgrades
+  try {
+    const columns = await db.getAllAsync<{ name: string }>('PRAGMA table_info(habits);');
+    const columnNames = columns.map(c => c.name);
+    const requiredColumns = ['id', 'title', 'subtitle', 'frequency', 'icon', 'color', 'target_type', 'target_value', 'created_at'];
+    const hasAllColumns = requiredColumns.every(col => columnNames.includes(col));
+    
+    if (columnNames.length > 0 && !hasAllColumns) {
+      await db.execAsync('DROP TABLE IF EXISTS logs;');
+      await db.execAsync('DROP TABLE IF EXISTS habits;');
+    }
+  } catch (e) {
+    console.warn('Error checking habits table schema:', e);
+  }
   
   // Create tables
   await db.execAsync(`
