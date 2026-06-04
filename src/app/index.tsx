@@ -15,7 +15,6 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   withSequence,
-  LayoutAnimationConfig,
 } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import { useHabits } from "@/context/HabitsContext";
@@ -111,19 +110,18 @@ export default function HomeScreen() {
       </Animated.View>
 
       {/* Habit Cards List */}
-      <LayoutAnimationConfig skipEntering>
-        <Animated.View
-          entering={FadeInUp.duration(600).delay(300)}
-          style={styles.listContainer}
-        >
-          {habits.map((habit) => {
-            const iconName = habit.icon as any;
+      <View style={styles.listContainer}>
+        {habits.map((habit, index) => {
+          const iconName = habit.icon as any;
 
-            return (
+          return (
+            <Animated.View
+              key={habit.id}
+              entering={FadeInUp.duration(500).delay(250 + index * 100)}
+              style={styles.cardPressable}
+            >
               <Pressable
-                key={habit.id}
                 onPress={() => toggleHabit(habit.id)}
-                style={styles.cardPressable}
               >
                 <Neumorphic
                   variant={habit.completed ? "inset" : "extruded"}
@@ -175,10 +173,10 @@ export default function HomeScreen() {
                   </Neumorphic>
                 </Neumorphic>
               </Pressable>
-            );
-          })}
-        </Animated.View>
-      </LayoutAnimationConfig>
+            </Animated.View>
+          );
+        })}
+      </View>
     </ScrollView>
   );
 }
