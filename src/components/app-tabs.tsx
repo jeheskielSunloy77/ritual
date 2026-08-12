@@ -3,7 +3,6 @@ import {
   View,
   Pressable,
   StyleSheet,
-  useColorScheme,
   SafeAreaView,
   useWindowDimensions,
   LayoutChangeEvent,
@@ -18,14 +17,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { Neumorphic } from "./Neumorphic";
 import { ThemedText } from "./themed-text";
-import { Colors } from "@/constants/theme";
+import { SurfaceColors } from "@/constants/surfaces";
 
 export default function AppTabs() {
   const router = useRouter();
   const pathname = usePathname();
-  const scheme = useColorScheme();
   const { width } = useWindowDimensions();
-  const colors = Colors[scheme === "dark" ? "dark" : "light"];
   const isWideScreen = width >= 600;
 
   const [navBarWidth, setNavBarWidth] = React.useState(0);
@@ -117,7 +114,7 @@ export default function AppTabs() {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
+      style={[styles.container, { backgroundColor: SurfaceColors.page }]}
     >
       {/* Screen Content */}
       <View style={styles.content}>
@@ -131,7 +128,7 @@ export default function AppTabs() {
         style={[
           styles.navBar,
           isWideScreen ? styles.navBarWide : styles.navBarMobile,
-          { backgroundColor: colors.background },
+          { backgroundColor: SurfaceColors.surface },
         ]}
       >
         {/* Outer layer for detecting layout width */}

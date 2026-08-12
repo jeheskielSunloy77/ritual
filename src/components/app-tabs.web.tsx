@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Pressable, StyleSheet, useColorScheme, SafeAreaView, useWindowDimensions, LayoutChangeEvent } from 'react-native';
+import { View, Pressable, StyleSheet, SafeAreaView, useWindowDimensions, LayoutChangeEvent } from 'react-native';
 import { Slot, useRouter, usePathname } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, {
@@ -10,14 +10,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Neumorphic } from './Neumorphic';
 import { ThemedText } from './themed-text';
-import { Colors } from '@/constants/theme';
+import { SurfaceColors } from '@/constants/surfaces';
 
 export default function AppTabs() {
   const router = useRouter();
   const pathname = usePathname();
-  const scheme = useColorScheme();
   const { width } = useWindowDimensions();
-  const colors = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const isWideScreen = width >= 600;
 
   const [navBarWidth, setNavBarWidth] = React.useState(0);
@@ -112,7 +110,7 @@ export default function AppTabs() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: SurfaceColors.page }]}>
       {/* Screen Content */}
       <View style={styles.content}>
         <Slot />
@@ -125,7 +123,7 @@ export default function AppTabs() {
         style={[
           styles.navBar,
           isWideScreen ? styles.navBarWide : styles.navBarMobile,
-          { backgroundColor: colors.background },
+          { backgroundColor: SurfaceColors.surface },
         ]}
       >
         {/* Outer layer for detecting layout width */}

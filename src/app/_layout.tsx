@@ -1,5 +1,5 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import { useColorScheme, ActivityIndicator, View } from 'react-native';
+import { DefaultTheme, ThemeProvider } from 'expo-router';
+import { ActivityIndicator, View } from 'react-native';
 import { useFonts, Handlee_400Regular } from '@expo-google-fonts/handlee';
 import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,8 +11,6 @@ import { HabitsProvider } from '@/context/HabitsContext';
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  
   const [fontsLoaded, fontError] = useFonts({
     'Handlee-Regular': Handlee_400Regular,
   });
@@ -33,7 +31,7 @@ export default function TabLayout() {
 
   return (
     <HabitsProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={DefaultTheme}>
         <AnimatedSplashOverlay />
         <AppTabs />
       </ThemeProvider>

@@ -339,7 +339,7 @@ export default function MeScreen() {
           style={styles.fabPressable}
         >
           <Neumorphic
-            variant="button-extruded"
+            variant="floating"
             borderRadius={28}
             style={styles.fabBtn}
             backgroundColor="#ff9f67"
@@ -378,6 +378,12 @@ export default function MeScreen() {
               isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
             ]}
           >
+            <Neumorphic
+              variant="sheet"
+              borderRadius={28}
+              style={StyleSheet.absoluteFill}
+            />
+
             {/* Grab Handle */}
             {!isWide && <View style={styles.grabHandle} />}
 
@@ -867,13 +873,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalSheet: {
-    backgroundColor: "#fef8f3",
     paddingTop: 8,
     paddingHorizontal: 24,
-    shadowColor: "#1d1b19",
-    shadowOpacity: 0.15,
-    shadowRadius: 15,
-    elevation: 20,
   },
   modalSheetCentered: {
     borderRadius: 28,
@@ -881,7 +882,6 @@ const styles = StyleSheet.create({
     maxWidth: 480,
     maxHeight: "80%",
     paddingBottom: 24,
-    shadowOffset: { width: 0, height: 10 },
   },
   modalSheetBottom: {
     borderTopLeftRadius: 28,
@@ -889,7 +889,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingBottom: Platform.OS === "ios" ? 34 : 24,
     maxHeight: Dimensions.get("window").height * 0.85,
-    shadowOffset: { width: 0, height: -10 },
   },
   grabHandle: {
     width: 40,
@@ -1039,10 +1038,5 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 4,
   },
 });

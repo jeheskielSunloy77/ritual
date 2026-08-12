@@ -6,7 +6,6 @@ import {
   Pressable,
   TextInput,
   SafeAreaView,
-  useColorScheme,
   Platform,
   useWindowDimensions,
   Modal,
@@ -23,12 +22,9 @@ import Animated, {
 import { useHabits } from "@/context/HabitsContext";
 import { Neumorphic } from "@/components/Neumorphic";
 import { ThemedText } from "@/components/themed-text";
-import { Colors } from "@/constants/theme";
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const scheme = useColorScheme();
-  const colors = Colors[scheme === "dark" ? "dark" : "light"];
   const { width } = useWindowDimensions();
   const isWide = width >= 600;
 
@@ -42,13 +38,13 @@ export default function ProfileScreen() {
   const [langModalVisible, setLangModalVisible] = useState(false);
 
   // Preference mock states (just UI)
-  const [themePreference, setThemePreference] = useState(
-    scheme === "dark" ? "dark" : "light",
-  );
+  const [themePreference, setThemePreference] = useState("light");
   const [languagePreference, setLanguagePreference] = useState("en"); // 'en' | 'es' | 'fr'
 
   // Update local state when context values load
   useEffect(() => {
+    // Context hydration is an external data update that seeds this editable form.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTempUsername(username);
     setSelectedAvatarUri(avatarUri);
   }, [username, avatarUri]);
@@ -324,6 +320,12 @@ export default function ProfileScreen() {
               isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
             ]}
           >
+            <Neumorphic
+              variant="sheet"
+              borderRadius={32}
+              style={StyleSheet.absoluteFill}
+            />
+
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
@@ -435,6 +437,12 @@ export default function ProfileScreen() {
               isWide ? styles.modalSheetCentered : styles.modalSheetBottom,
             ]}
           >
+            <Neumorphic
+              variant="sheet"
+              borderRadius={32}
+              style={StyleSheet.absoluteFill}
+            />
+
             {!isWide && <View style={styles.grabHandle} />}
 
             <View style={styles.modalHeader}>
@@ -699,24 +707,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalSheet: {
-    backgroundColor: "#fef8f3",
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingHorizontal: 24,
     paddingTop: 12,
     paddingBottom: Platform.OS === "ios" ? 40 : 24,
     width: "100%",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 10,
   },
   modalSheetCentered: {
     borderRadius: 32,
     maxWidth: 440,
     paddingBottom: 24,
-    shadowOffset: { width: 0, height: 4 },
   },
   modalSheetBottom: {
     borderTopLeftRadius: 32,
